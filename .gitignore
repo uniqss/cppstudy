@@ -1,3 +1,10 @@
 /cppcalllua/cppcalllua/.vs
 /cppxlsxoperation/cppxlsxoperation/.vs
 /cppxlsxoperation/cppxlsxoperation/x64
+*.obj
+*.pdb
+*.ilk
+*.tlog
+*.idb
+*.log
+*.recipe
