@@ -11,6 +11,18 @@ local function CamelCase(s)
     return (camel:gsub("^%l", string.upper))
 end
 
+local function transType(ctype)
+    if ctype == "uint32" then
+        return "uint32"
+    elseif ctype == "string" then
+        return "string"
+    elseif ctype == "repeated string" then
+        return "[]string"
+    elseif ctype == "repeated uint32" then
+        return "[]uint32"
+    end
+end
+
 str = "snake_case_hello_world_123_haha"
 
 camel = CamelCase(str)
@@ -20,3 +32,8 @@ print(camel)
 snake = snake_case(camel)
 print(snake)
 --]]
+
+print(transType("uint32"))
+print(transType("string"))
+print(transType("repeated string"))
+print(transType("repeated uint32"))

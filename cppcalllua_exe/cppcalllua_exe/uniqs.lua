@@ -31,6 +31,19 @@ local function CamelCase(s)
     print("camel:"..camel)
     return (camel:gsub("^%l", string.upper))
 end
+local function transType(ctype)
+    if ctype == "uint32" then
+        return "uint32"
+    elseif ctype == "string" then
+        return "string"
+    elseif ctype == "repeated string" then
+        return "[]string"
+    elseif ctype == "repeated uint32" then
+        return "[]uint32"
+    else
+        print("type unrecogonized:"..ctype)
+    end
+end
 
 function ProcessOneSheet(xlsxName, sheetName, vecNames, vecTypes, vecDescriptions)
     print("xlsxName:" .. xlsxName)
@@ -56,7 +69,7 @@ function ProcessOneSheet(xlsxName, sheetName, vecNames, vecTypes, vecDescription
 
     for idx=1,count do
         local cname = vecNames[idx]
-        local ctype = vecTypes[idx]
+        local ctype = transType(vecTypes[idx])
         local cdesc = vecDescriptions[idx]
         if cname ~= nil and cname ~= "" and ctype ~= nil and ctype ~= "" then
             writeln("\t"..CamelCase(cname).." "..ctype.."  `db_col_name:\""..cname.."\"` // "..cdesc)
