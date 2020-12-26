@@ -37,3 +37,13 @@ print(transType("uint32"))
 print(transType("string"))
 print(transType("repeated string"))
 print(transType("repeated uint32"))
+
+local file = nil
+local function func2()
+    file:write("fuck", "\n")
+end
+local function localFunc()
+    file = io.open("./fuck.txt", "w+")
+    func2()
+    io.close(file)
+end
