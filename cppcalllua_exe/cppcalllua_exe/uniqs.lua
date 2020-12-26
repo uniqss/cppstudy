@@ -158,13 +158,13 @@ func (m *DT_Hero_Nature_Config) GetQiRate() []uint32 {
         if cname ~= nil and cname ~= "" and ctype ~= nil and ctype ~= "" then
             ctype = transType(ctype)
             if ctype == "uint32" then
-                writeln("dt."..cname.." = DataTableReadUInt32(data, \""..cname.."\", "..realIdx..", \""..sheetName.."\")")
+                writeln("\tdt."..cname.." = DataTableReadUInt32(data, \""..cname.."\", "..realIdx..", \""..sheetName.."\")")
             elseif ctype == "string" then
-                writeln("dt."..cname.." = DataTableReadString(data, \""..cname.."\", "..realIdx..", \""..sheetName.."\")")
+                writeln("\tdt."..cname.." = DataTableReadString(data, \""..cname.."\", "..realIdx..", \""..sheetName.."\")")
             elseif ctype == "[]uint32" then
-                writeln("dt."..cname.." = DataTableReadUInt32Arr(data, \""..cname.."\", "..realIdx..", \""..sheetName.."\")")
+                writeln("\tdt."..cname.." = DataTableReadUInt32Arr(data, \""..cname.."\", "..realIdx..", \""..sheetName.."\")")
             elseif ctype == "[]string" then
-                writeln("dt."..cname.." = DataTableReadStringArr(data, \""..cname.."\", "..realIdx..", \""..sheetName.."\")")
+                writeln("\tdt."..cname.." = DataTableReadStringArr(data, \""..cname.."\", "..realIdx..", \""..sheetName.."\")")
             end
             realIdx = realIdx + 1
         end
