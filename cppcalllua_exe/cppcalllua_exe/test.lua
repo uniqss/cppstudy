@@ -47,3 +47,39 @@ local function localFunc()
     func2()
     io.close(file)
 end
+
+--- Check if a file or directory exists in this path
+function exists(file)
+    local ok, err, code = os.rename(file, file)
+    if not ok then
+        if code == 13 then
+            -- Permission denied, but it exists
+            return true
+        end
+    end
+    return ok, err
+end
+--- Check if a directory exists in this path
+function isdir(path)
+    -- "/" works on both Unix and Windows
+    return exists(path.."/")
+end
+function createDirIfNotExists(path)
+    if isdir(path) then
+        return
+    end
+    os.execute("mkdir " .. path)
+end
+
+function file_exists(path)
+    local file = io.open(path, "rb")
+    if file then file:close() end
+    return file ~= nil
+end
+
+local fexist = isdir("./xxx/")
+
+print(fexist)
+
+fexist = isdir("../cppcalllua_exe")
+print(fexist)

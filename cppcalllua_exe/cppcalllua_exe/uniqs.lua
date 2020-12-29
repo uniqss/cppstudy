@@ -58,6 +58,29 @@ local function getTypeDefault(ctype)
     end
 end
 
+--- Check if a file or directory exists in this path
+function exists(file)
+    local ok, err, code = os.rename(file, file)
+    if not ok then
+        if code == 13 then
+            -- Permission denied, but it exists
+            return true
+        end
+    end
+    return ok, err
+end
+--- Check if a directory exists in this path
+function isdir(path)
+    -- "/" works on both Unix and Windows
+    return exists(path.."/")
+end
+function createDirIfNotExists(path)
+    if isdir(path) then
+        return
+    end
+    os.execute("mkdir " .. path)
+end
+
 function ProcessOneSheet(xlsxName, sheetName, vecNames, vecTypes, vecDescriptions)
     --[[
     print("xlsxName:" .. xlsxName)
@@ -67,7 +90,7 @@ function ProcessOneSheet(xlsxName, sheetName, vecNames, vecTypes, vecDescription
     PrintTable1(vecDescriptions)
     --]]
 
-    os.execute("mkdir " .. outputDir)
+    createDirIfNotExists(outputDir)
 
     -- 取count的最小值
     local count1 = tablelength(vecNames)
