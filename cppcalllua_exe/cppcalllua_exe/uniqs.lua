@@ -142,11 +142,7 @@ func (m *DT_Hero_Nature_Config) GetQiRate() []uint32 {
     writeln()
 
     writeln("func init() {")
-    writeln("\tDTPreInit()")
-    writeln("\tregister(\""..sheetName.."\", &"..sheetName.."_Data{}, &"..sheetName.."{},")
-    writeln("\t\tfunc(dt interface{}, bt interface{}) {")
-    writeln("\t\t\tdt.(*"..sheetName.."_Data)."..sheetName.."Items[bt.(*"..sheetName..").Id] = bt.(*"..sheetName..")")
-    writeln("\t\t})")
+    writeln("\tregister(\""..sheetName.."\", &"..sheetName.."_Data{}, &"..sheetName.."{})")
     writeln("}")
     writeln()
 
@@ -169,6 +165,8 @@ func (m *DT_Hero_Nature_Config) GetQiRate() []uint32 {
             realIdx = realIdx + 1
         end
     end
+    writeln()
+    writeln("\tGet"..sheetName.."()."..sheetName.."Items[dt.Id] = dt")
     writeln("}")
     writeln()
 
