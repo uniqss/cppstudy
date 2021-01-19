@@ -20,11 +20,11 @@ local function writeln(str)
     end
 end
 local function camelCase(s)
-	return string.gsub(s, "_%w+", function(word)
-		local first = string.sub(word, 2, 2)
-		local rest = string.sub(word, 3)
-		return string.upper(first) .. rest
-	end)
+    return string.gsub(s, "_%w+", function(word)
+        local first = string.sub(word, 2, 2)
+        local rest = string.sub(word, 3)
+        return string.upper(first) .. rest
+    end)
 end
 local function CamelCase(s)
     local camel = camelCase(s)
@@ -196,7 +196,11 @@ func (m *DT_Hero_Nature_Config) GetQiRate() []uint32 {
     writeln("func Get"..sheetName.."() *"..sheetName.."_Data {")
     writeln("\treturn get(\""..sheetName.."\").(*"..sheetName.."_Data)")
     writeln("}")
-    
+
     io.close(goFile)
+
+    gofmtCmd = "gofmt.exe -w "..filePath
+    os.execute(gofmtCmd)
+    print("gofmtCmd:"..gofmtCmd)
     return 0
 end
