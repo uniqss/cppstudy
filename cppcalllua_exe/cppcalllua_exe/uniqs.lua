@@ -40,6 +40,10 @@ local function transType(ctype)
         return "[]string"
     elseif ctype == "repeated uint32" then
         return "[]uint32"
+    elseif ctype == "float" then
+        return "float64"
+    elseif ctype == "repeated float64" then
+        return "[]float"
     else
         print("type unrecogonized:"..ctype)
     end
@@ -47,11 +51,15 @@ end
 local function getTypeDefault(ctype)
     if ctype == "uint32" then
         return "0"
+    elseif ctype == "float" then
+        return "0"
     elseif ctype == "string" then
         return "\"\""
     elseif ctype == "repeated string" then
         return "nil"
     elseif ctype == "repeated uint32" then
+        return "nil"
+    elseif ctype == "repeated float64" then
         return "nil"
     else
         print("type unrecogonized:"..ctype)
@@ -180,10 +188,14 @@ func (m *DT_Hero_Nature_Config) GetQiRate() []uint32 {
                 writeln("\tdt."..cname.." = DataTableReadUInt32(data, \""..cname.."\", "..realIdx..", \""..sheetName.."\")")
             elseif ctype == "string" then
                 writeln("\tdt."..cname.." = DataTableReadString(data, \""..cname.."\", "..realIdx..", \""..sheetName.."\")")
+            elseif ctype == "float" then
+                writeln("\tdt."..cname.." = DataTableReadFloat(data, \""..cname.."\", "..realIdx..", \""..sheetName.."\")")
             elseif ctype == "[]uint32" then
                 writeln("\tdt."..cname.." = DataTableReadUInt32Arr(data, \""..cname.."\", "..realIdx..", \""..sheetName.."\")")
             elseif ctype == "[]string" then
                 writeln("\tdt."..cname.." = DataTableReadStringArr(data, \""..cname.."\", "..realIdx..", \""..sheetName.."\")")
+            elseif ctype == "[]float" then
+                writeln("\tdt."..cname.." = DataTableReadFloatArr(data, \""..cname.."\", "..realIdx..", \""..sheetName.."\")")
             end
             realIdx = realIdx + 1
         end

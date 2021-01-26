@@ -37,7 +37,12 @@ void __getCellValueString(OpenXLSX::XLCellValue& cellValue, std::string& str)
 	}
 }
 
-int read_xlsx(const char* filename, std::vector<std::pair<std::string, std::vector<std::vector<std::string> > > >& vecResult)
+int read_xlsx(
+	const char* filename
+	, std::vector<std::pair<std::string, std::vector<std::vector<std::string> > > >& vecResult
+	, int maxRows
+	, int maxCols
+)
 {
 	XLDocument doc;
 	OpenXLSX::XLWorksheet wks;
@@ -48,6 +53,17 @@ int read_xlsx(const char* filename, std::vector<std::pair<std::string, std::vect
 
 	vecResult.clear();
 
+	uint32_t rowIdxMax = maxRows;
+	if (maxRows == -1)
+	{
+		rowIdxMax = std::numeric_limits<unsigned>::max();
+	}
+	uint32_t colIdxMax = maxCols;
+	if (maxCols == -1)
+	{
+		colIdxMax = std::numeric_limits<unsigned>::max();
+	}
+
 	for (auto sheetName : sheetNames)
 	{
 		std::pair<std::string, std::vector<std::vector<std::string> > > oneSheet;
@@ -55,12 +71,12 @@ int read_xlsx(const char* filename, std::vector<std::pair<std::string, std::vect
 
 		wks = doc.workbook().worksheet(sheetName);
 
-		for (uint32_t rowidx = 1; rowidx < wks.rowCount() + 1; rowidx++)
+		for (uint32_t rowidx = 1; rowidx < wks.rowCount() + 1 && rowidx <= rowIdxMax; rowidx++)
 		{
 			std::vector<string> oneRow;
 			auto row = wks.row(rowidx);
 			//cout << "rowidx:" << rowidx << " cellCount:" << row.cellCount() << endl;
-			for (unsigned colidx = 1; colidx <= row.cellCount(); ++colidx)
+			for (unsigned colidx = 1; colidx <= row.cellCount() && colidx <= colIdxMax; ++colidx)
 			{
 				auto cell = wks.cell(rowidx, colidx);
 				auto cellValue = cell.value();
@@ -80,7 +96,12 @@ int read_xlsx(const char* filename, std::vector<std::pair<std::string, std::vect
 
 	return 0;
 }
-int read_xlsx(const std::string& filename, std::vector<std::pair<std::string, std::vector<std::vector<std::string> > > >& vecResult)
+int read_xlsx(
+	const std::string& filename
+	, std::vector<std::pair<std::string, std::vector<std::vector<std::string> > > >& vecResult
+	, int maxRows
+	, int maxCols
+)
 {
 	return read_xlsx(filename.c_str(), vecResult);
 }

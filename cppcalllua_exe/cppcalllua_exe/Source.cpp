@@ -7,11 +7,22 @@ int main(int argc, const char** argv)
 
 	if (argc < 2)
 	{
-		printf("usage: %s xlsxFileName \n", argv[0]);
+		printf("usage: %s xlsxFileName [maxRowCount [maxColCount]] \n", argv[0]);
 		return -1;
 	}
 
-	read_xlsx(argv[1], vecxlsx);
+	int maxRows = -1;
+	if (argc > 2)
+	{
+		maxRows = std::atoi(argv[2]);
+	}
+	int maxCols = -1;
+	if (argc > 3)
+	{
+		maxCols = std::atoi(argv[3]);
+	}
+
+	read_xlsx(argv[1], vecxlsx, maxRows, maxCols);
 
 	int ret = 0;
 	for (const auto& it : vecxlsx)
