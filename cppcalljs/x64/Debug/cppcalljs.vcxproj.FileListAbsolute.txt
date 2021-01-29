@@ -1,0 +1,2 @@
+F:\github\uniqss\cppstudy\cppcalljs\x64\Debug\cppcalljs.exe
+F:\github\uniqss\cppstudy\cppcalljs\x64\Debug\cppcalljs.pdb
