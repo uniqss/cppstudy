@@ -30,6 +30,7 @@
     <ClInclude Include="Fake\TsGameInstance.generated.h" />
     <ClInclude Include="Fake\UObject\GCObject.h" />
     <ClInclude Include="JsEnv.h" />
+    <ClInclude Include="JsEnvImpl.h" />
     <ClInclude Include="JSLogger.h" />
     <ClInclude Include="JSModuleLoader.h" />
     <ClInclude Include="TsGameInstance.h" />
@@ -38,6 +39,7 @@
     <ClCompile Include="cppcalljs.cpp" />
     <ClCompile Include="Fake\Engine\GameInstance.cpp" />
     <ClCompile Include="JsEnv.cpp" />
+    <ClCompile Include="JsEnvImpl.cpp" />
     <ClCompile Include="TsGameInstance.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

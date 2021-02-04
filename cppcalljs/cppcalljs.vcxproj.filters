@@ -72,6 +72,9 @@
     <ClInclude Include="Fake\ExtensionMethods.generated.h">
       <Filter>Fake</Filter>
     </ClInclude>
+    <ClInclude Include="JsEnvImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cppcalljs.cpp">
@@ -84,6 +87,9 @@
       <Filter>Fake\Engine</Filter>
     </ClCompile>
     <ClCompile Include="TsGameInstance.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="JsEnvImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
