@@ -151,6 +151,12 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\bin\helloworld.js" />
+    <None Include="..\bin\readfile.js" />
+    <None Include="..\bin\shelltest.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="uniqsv8gettype.h" />
     <ClInclude Include="v8_inc.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -18,21 +18,12 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="call_js_function.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="global_function.cpp">
+    <ClCompile Include="JsEnv.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="global_function.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="v8_inc.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="uniqsv8gettype.h">
+    <ClInclude Include="JsEnv.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

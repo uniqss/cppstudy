@@ -8,3 +8,16 @@
 *.idb
 *.log
 *.recipe
+/cppcalljs2/cppcalljs2/.vs
+/cppcalljs2/cppcalljs2/Debug
+/cppcalljs2/cppcalljs2/Release
+/cppcalljs2/cppcalljs2/x64
+/cppcalljs2/shell/.vs
+/cppcalljs2/.vs
+/cppcalljs/.vs
+/cppcalljs2/shell/Debug
+/cppcalljs2/shell/x64
+/cppcalljs2/bin/*.iobj
+/cppcalljs2/bin/*.lib
+/cppcalljs2/bin/*.exp
+/cppcalljs2/bin/*.ipdb
