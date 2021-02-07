@@ -21,3 +21,9 @@
 /cppcalljs2/bin/*.lib
 /cppcalljs2/bin/*.exp
 /cppcalljs2/bin/*.ipdb
+/cppcalljs3/.vs
+/cppcalljs3/x64
+/cppcalljs3/bin/.idea
+/cppcalljs3/cppcalljs3/.vs
+/cppcalljs3/shell/.vs
+/cppcalljs3/shell/x64
