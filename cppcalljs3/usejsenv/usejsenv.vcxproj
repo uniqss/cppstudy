@@ -21,10 +21,9 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{0587E312-61E3-403E-A90D-C5F9BCE0566A}</ProjectGuid>
-    <RootNamespace>cppcalljs2</RootNamespace>
+    <ProjectGuid>{6989e344-8433-4e25-94a6-eb79e4241f89}</ProjectGuid>
+    <RootNamespace>usejsenv</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>shell</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -82,7 +81,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin\</OutDir>
+    <OutDir>$(SolutionDir)\bin</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -102,17 +101,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>E:\projects\puerts\v8-build\v8\v8;E:\projects\puerts\v8-build\v8\v8\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>E:\projects\puerts\v8-build\v8\v8\out.gn\x64.release\obj</AdditionalLibraryDirectories>
-      <AdditionalDependencies>v8_base_without_compiler_0.lib;v8_base_without_compiler_1.lib;v8_compiler.lib;v8_snapshot.lib;v8_libbase.lib;v8_libplatform.lib;v8_libsampler.lib;v8_init.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -135,7 +131,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(v8_home);$(v8_home)\include;E:\projects\v8pp</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\projects\puerts\v8-build\v8\v8;E:\projects\puerts\v8-build\v8\v8\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -143,27 +139,16 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>cppgc_base.lib;torque_base.lib;torque_generated_definitions.lib;torque_generated_initializers.lib;v8_base_without_compiler_0.lib;v8_base_without_compiler_1.lib;v8_compiler.lib;v8_cppgc_shared.lib;v8_init.lib;v8_initializers.lib;v8_libbase.lib;v8_libplatform.lib;v8_libsampler.lib;v8_snapshot.lib;wee8.lib;winmm.lib;dbghelp.lib;shlwapi.lib;v8pp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(v8_home)\out.gn\x64.release\obj;E:\projects\v8pp\bin\Release</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\projects\puerts\v8-build\v8\v8\out.gn\x64.release\obj</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cppgc_base.lib;torque_base.lib;torque_generated_definitions.lib;torque_generated_initializers.lib;v8_base_without_compiler_0.lib;v8_base_without_compiler_1.lib;v8_compiler.lib;v8_cppgc_shared.lib;v8_init.lib;v8_initializers.lib;v8_libbase.lib;v8_libplatform.lib;v8_libsampler.lib;v8_snapshot.lib;wee8.lib;winmm.lib;dbghelp.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="common_functions.cpp" />
+    <ClCompile Include="JsEnv.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="test_call_v8.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\bin\helloworld.js" />
-    <None Include="..\bin\readfile.js" />
-    <None Include="..\bin\shelltest.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="common_functions.h" />
-    <ClInclude Include="test.hpp" />
-    <ClInclude Include="test_call_v8.h" />
-    <ClInclude Include="uniqsv8gettype.h" />
-    <ClInclude Include="v8pp.h" />
-    <ClInclude Include="v8_inc.h" />
+    <ClInclude Include="JsEnv.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

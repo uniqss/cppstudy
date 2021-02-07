@@ -1,6 +1,10 @@
 #include "v8_inc.h"
 
+#include "v8pp.h"
+
 #include "test_call_v8.h"
+
+#include "common_functions.h"
 
 int main()
 {
@@ -13,7 +17,12 @@ int main()
 	v8::V8::InitializePlatform(platform.get());
 	v8::V8::Initialize();
 
-	test_call_v8();
+
+	v8pp::context context;
+
+
+	set_common_functions(context);
+	test_call_v8(context);
 
 
 	v8::V8::Dispose();

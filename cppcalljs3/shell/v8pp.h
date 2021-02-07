@@ -5,3 +5,4 @@
 #include "v8pp/utility.hpp"
 
 #include "v8pp/call_v8.hpp"
+#include "v8pp/function.hpp"
