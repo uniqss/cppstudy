@@ -135,7 +135,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>E:\projects\puerts\v8-build\v8\v8;E:\projects\puerts\v8-build\v8\v8\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(v8_home);$(v8_home)\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -144,7 +144,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>cppgc_base.lib;torque_base.lib;torque_generated_definitions.lib;torque_generated_initializers.lib;v8_base_without_compiler_0.lib;v8_base_without_compiler_1.lib;v8_compiler.lib;v8_cppgc_shared.lib;v8_init.lib;v8_initializers.lib;v8_libbase.lib;v8_libplatform.lib;v8_libsampler.lib;v8_snapshot.lib;wee8.lib;winmm.lib;dbghelp.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:\projects\puerts\v8-build\v8\v8\out.gn\x64.release\obj</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(v8_home)\out.gn\x64.release\obj</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -174,20 +174,22 @@ void TestAdd(const v8::FunctionCallbackInfo<v8::Value>& args) {
 	//	v8::String::NewFromUtf8(args.GetIsolate(), v8::V8::GetVersion())
 	//	.ToLocalChecked());
 
-	const char* argsDataType = UniqsV8GetType(args.Data());
-	printf("TestAdd argsDataType:%s\n", argsDataType);
+	//const char* argsDataType = UniqsV8GetType(args.Data());
+	//printf("TestAdd argsDataType:%s\n", argsDataType);
 
-	int length = args.Length();
-	printf("TestAdd args.Length:%d \n", length);
 
-	const char* args1type = UniqsV8GetType(args[0]);
-	const char* args2type = UniqsV8GetType(args[1]);
-	printf("TestAdd args1type:%s args2type:%s \n", args1type, args2type);
-	v8::Local<v8::Object> p1object = args[1]->ToObject(args.GetIsolate()->GetCurrentContext()).ToLocalChecked();
-	bool isNumber = p1object->IsNumberObject();
-	printf("TestAdd p1object->IsNumberObject:%d\n", (int)isNumber);
-	v8::Local<v8::Value> a1 = args[1];
-	auto v1test = a1->ToInt32(args.GetIsolate()->GetCurrentContext());
+	// 一定要注意v8版本！一定要注意v8版本！一定要注意v8版本！
+	//int length = args.Length();
+	//printf("TestAdd args.Length:%d \n", length);
+	//
+	//const char* args1type = UniqsV8GetType(args[0]);
+	//const char* args2type = UniqsV8GetType(args[1]);
+	//printf("TestAdd args1type:%s args2type:%s \n", args1type, args2type);
+	//v8::Local<v8::Object> p1object = args[1]->ToObject(args.GetIsolate()->GetCurrentContext()).ToLocalChecked();
+	//bool isNumber = p1object->IsNumberObject();
+	//printf("TestAdd p1object->IsNumberObject:%d\n", (int)isNumber);
+	//v8::Local<v8::Value> a1 = args[1];
+	//auto v1test = a1->ToInt32(args.GetIsolate()->GetCurrentContext());
 	
 	int v1 = args[0]->Int32Value(args.GetIsolate()->GetCurrentContext()).FromMaybe(0);
 	int v2 = args[1]->Int32Value(args.GetIsolate()->GetCurrentContext()).FromMaybe(0);

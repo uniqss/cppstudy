@@ -4,7 +4,7 @@ print("helloworld.js begin");
 
 load("readfile.js");
 
-ret = testAdd(123, 321, 1234);
+ret = testAdd(123, 11111, 1234);
 
 print(ret);
 
