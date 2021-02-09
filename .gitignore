@@ -27,3 +27,10 @@
 /cppcalljs3/cppcalljs3/.vs
 /cppcalljs3/shell/.vs
 /cppcalljs3/shell/x64
+/cppcalljs4/.vs
+/cppcalljs4/bin/.idea
+/cppcalljs4/cppcalljs/x64
+/cppcalllua/cppcalllua/x64/Release
+*.iobj
+*.exp
+*.ipdb
