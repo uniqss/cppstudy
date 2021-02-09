@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -144,11 +144,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DefaultJsModuleLoader.cpp" />
     <ClCompile Include="JsEnv.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Algo.h" />
+    <ClInclude Include="def.h" />
+    <ClInclude Include="FString.h" />
     <ClInclude Include="JsEnv.h" />
+    <ClInclude Include="JsLogger.h" />
+    <ClInclude Include="JsModuleLoader.h" />
+    <ClInclude Include="stl.h" />
+    <ClInclude Include="TArray.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

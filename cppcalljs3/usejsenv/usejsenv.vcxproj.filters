@@ -21,9 +21,33 @@
     <ClCompile Include="JsEnv.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="DefaultJsModuleLoader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="JsEnv.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="def.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="JsLogger.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="JsModuleLoader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="stl.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TArray.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FString.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Algo.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

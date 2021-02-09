@@ -1,27 +1,28 @@
 
 #include "stl.h"
 #include "def.h"
-
+#include "Algo.h"
 
 static FString PathNormalize(const FString& PathIn)
 {
 	TArray<FString> PathFrags;
-	PathIn.ParseIntoArray(PathFrags, TEXT("/"));
+	ParseIntoArray(PathIn, PathFrags, TEXT("/"));
 	Algo::Reverse(PathFrags);
-	TArray<FString> NewPathFrags;
-	while (PathFrags.Num() > 0) {
-		FString E = PathFrags.Pop();
+	std::deque<FString> NewPathFrags;
+	for (auto& E : PathFrags)
+	{
 		if (E != TEXT("") && E != TEXT("."))
 		{
-			if (E == TEXT("..") && NewPathFrags.Num() > 0 && NewPathFrags.Last() != TEXT("..")) {
-				NewPathFrags.Pop();
+			if (E == TEXT("..") && NewPathFrags.size() > 0 && NewPathFrags.back() != TEXT("..")) {
+				NewPathFrags.pop_back();
 			}
 			else {
-				NewPathFrags.Push(E);
+				NewPathFrags.push_back(E);
 			}
 		}
 	}
-	return FString::Join(NewPathFrags, TEXT("/"));
+
+	return Join(NewPathFrags, TEXT("/"));
 }
 
 bool DefaultJSModuleLoader::CheckExists(const FString& PathIn, FString& Path, FString& AbsolutePath)
