@@ -34,3 +34,6 @@
 *.iobj
 *.exp
 *.ipdb
+/cppcalljs4/bin/cppcalljs.lib
+/cppcalljs3/bin/cppcalljs2.lib
+/cppcalljs3/bin/shell.lib
