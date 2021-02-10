@@ -118,6 +118,7 @@ void init_filereadwrite(v8pp::context& context)
 		.set("open", &file_writer::open)
 		.set("print", &file_writer::print)
 		.set("println", &file_writer::println)
+		.set("close", &file_writer::close)
 		;
 	context.set("FileWriter", FileWriter_class);
 }
