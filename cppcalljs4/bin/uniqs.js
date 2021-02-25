@@ -9,14 +9,14 @@ let writeln = function (str) {
     }
 }
 
-function snake2Pascal( str ){
+const snake2Pascal = str => {
     str +='';
     str = str.split('_');
-    for(var i=0;i<str.length;i++){
+    for(let i=0; i<str.length; i++){
         str[i] = str[i].slice(0,1).toUpperCase() + str[i].slice(1,str[i].length);
     }
     return str.join('');
-}
+};
 
 function CamelCase(str) {
     return snake2Pascal(str);

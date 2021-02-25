@@ -28,5 +28,12 @@ int ProcessOneSheet(
 	fun = context.run_file("uniqs.js").As<v8::Function>();
 	v8pp::call_v8(isolate, fun, fun, xlsxName, sheetName, vecNames, vecTypes, vecDescriptions);
 
+	if (try_catch.HasCaught())
+	{
+		std::string const msg = v8pp::from_v8<std::string>(isolate,
+			try_catch.Exception()->ToString(isolate->GetCurrentContext()).ToLocalChecked());
+		throw std::runtime_error(msg);
+	}
+
 	return 0;
 }

@@ -47,10 +47,11 @@ static int os_rename(const char* fromname, const char* toname) {
 
 void init_module_os(v8pp::context& context)
 {
-	v8::HandleScope scope(context.isolate());
+	v8::Isolate* isolate = context.isolate();
+	v8::HandleScope scope(isolate);
 
 	// module使用第一步，声明 module
-	v8pp::module osModule(context.isolate());
+	v8pp::module osModule(isolate);
 
 	// module使用第二步，set设置常量、函数、属性(只读属性、读写属性)
 	osModule.set("execute", &os_execute);
