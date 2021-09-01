@@ -3,27 +3,30 @@
 #include "hbase.h"
 #include "hsocket.h"
 
+#include "../tcps/p.h"
+
 static void send_heartbeat(hio_t* io) {
+    _myprtf("\n");
     static char buf[] = "PING\r\n";
-    printf("send heartbeat %s", buf);
+    _myprtf("send heartbeat %s", buf);
     hio_write(io, buf, 6);
 }
 
 void connection_c::on_establish(){
-    printf("connection_c::on_establish\n");
+    _myprtf("connection_c::on_establish\n");
     
     // uncomment to test heartbeat
     hio_set_heartbeat(this->connio, 3000, send_heartbeat);
 }
 
 void connection_c::on_recv(void* buf, int readbytes){
-    printf("connection_c::on_recv readbytes=%d\n", readbytes);
+    _myprtf("connection_c::on_recv readbytes=%d\n", readbytes);
     
-    printf("%.*s", readbytes, (char*)buf);
+    _myprtf("%.*s", readbytes, (char*)buf);
 
     fflush(stdout);
 }
 
 void connection_c::on_close(int error){
-    printf("connection_c::on_close error=%d\n", error);
+    _myprtf("connection_c::on_close error=%d\n", error);
 }

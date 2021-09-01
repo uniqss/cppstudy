@@ -6,10 +6,13 @@
 
 #include "connection_c.h"
 
+#include "../tcps/p.h"
+
 int main(int argc, char** argv) {
+    _myprtf("\n");
     if (argc < 3)
     {
-        printf("arg not enough.\n");
+        _myprtf("arg not enough.\n");
         return -1;
     }
 
@@ -29,7 +32,7 @@ int main(int argc, char** argv) {
     bool ok = false;
     ok = c->connect(host, (unsigned short)port);
     if (!ok){
-        printf("c->connect failed.host:%s, port:%d\n", host, (int)(unsigned short)port);
+        _myprtf("c->connect failed.host:%s, port:%d\n", host, (int)(unsigned short)port);
         return -300;
     }
     

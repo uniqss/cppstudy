@@ -9,16 +9,19 @@
 #include "connection_s.h"
 #include "client_conn_factory.h"
 
+#include "p.h"
+
 int main(int argc, char** argv) {
+    _myprtf("\n");
     if (argc < 2) {
-        printf("Usage: %s port\n", argv[0]);
+        _myprtf("Usage: %s port\n", argv[0]);
         return -10;
     }
     int port = atoi(argv[1]);
 
     auto net = create_net();
     if (net == NULL) {
-        printf("net == NULL\n");
+        _myprtf("net == NULL\n");
         return -100;
     }
 
@@ -28,7 +31,7 @@ int main(int argc, char** argv) {
     unsigned short usport = (unsigned short)port;
     ok = l->listen("0.0.0.0", usport);
     if (!ok) {
-        printf("listen failed.%d\n", usport);
+        _myprtf("listen failed.%d\n", usport);
         return -200;
     }
 
