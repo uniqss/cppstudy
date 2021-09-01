@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "../libhv-1.2.1"
+		},
+		{
+			"path": "../net"
 		}
 	],
 	"settings": {
@@ -57,7 +60,8 @@
 			"utility": "cpp",
 			"typeinfo": "cpp",
 			"valarray": "cpp",
-			"algorithm": "cpp"
+			"algorithm": "cpp",
+			"memory": "cpp"
 		}
 	}
 }
