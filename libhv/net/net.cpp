@@ -236,5 +236,5 @@ std::unique_ptr<net> create_net(){
         return NULL;
     }
     n->loop = loop;
-    return std::move(n);
+    return n;
 }

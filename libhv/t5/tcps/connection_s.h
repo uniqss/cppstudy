@@ -6,7 +6,6 @@
 class connection_s : public connection_t
 {
     public:
-    virtual ~connection_s(){}
     virtual void on_establish();
     virtual void on_recv(void* buf, int readbytes);
     virtual void on_close(int error);
