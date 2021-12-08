@@ -3,6 +3,7 @@
 
 #include "examples.h"
 
+bool async = true;
 
 void onMsg(natsConnection *nc, natsSubscription *sub, natsMsg *msg, void *closure) {
     if (print)

@@ -20,7 +20,6 @@
 
 #define MAX_SERVERS (10)
 
-bool async = true;
 const char *subj = "foo";
 const char *payload = "hello";
 const char *name = "worker";
