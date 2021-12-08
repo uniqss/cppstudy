@@ -14,7 +14,8 @@ void onMsg(natsConnection *nc, natsSubscription *sub, natsMsg *msg, void *closur
         last_tid = tid;
     } else {
         if (last_tid != tid) {
-            printf("I see dead people(见鬼了) \n");
+            printf("I see dead people(见鬼了)\n");
+            throw std::logic_error("I see dead people(见鬼了)");
         }
     }
 
