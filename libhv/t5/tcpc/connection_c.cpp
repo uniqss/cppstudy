@@ -12,21 +12,21 @@ static void send_heartbeat(hio_t* io) {
     hio_write(io, buf, 6);
 }
 
-void connection_c::on_establish(){
+void connection_c::on_establish() {
     _myprtf("connection_c::on_establish\n");
-    
+
     // uncomment to test heartbeat
     hio_set_heartbeat(this->connio, 3000, send_heartbeat);
 }
 
-void connection_c::on_recv(void* buf, int readbytes){
+void connection_c::on_recv(void* buf, int readbytes) {
     _myprtf("connection_c::on_recv readbytes=%d\n", readbytes);
-    
+
     _myprtf("%.*s", readbytes, (char*)buf);
 
     fflush(stdout);
 }
 
-void connection_c::on_close(int error){
+void connection_c::on_close(int error) {
     _myprtf("connection_c::on_close error=%d\n", error);
 }

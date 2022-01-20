@@ -2,9 +2,9 @@
 
 #include "client_connection.h"
 
-connection_t* client_conn_factory::create_connection(){
+connection_t* client_conn_factory::create_connection() {
     connection_t* conn = new client_connection();
-    if (conn == NULL){
+    if (conn == NULL) {
         return NULL;
     }
 
@@ -12,7 +12,7 @@ connection_t* client_conn_factory::create_connection(){
     return conn;
 }
 
-void client_conn_factory::release_connection(connection_t* conn){
-    delete(conn);
+void client_conn_factory::release_connection(connection_t* conn) {
+    delete (conn);
     set_connections.erase(conn);
 }

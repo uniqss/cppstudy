@@ -8,27 +8,26 @@
 static void on_accept(hio_t* io);
 
 class listener;
-class connection_t
-{
-    public:
-    hio_t*    connio;
-    char      addr[SOCKADDR_STRLEN];
+class connection_t {
+   public:
+    hio_t* connio;
+    char addr[SOCKADDR_STRLEN];
     listener* root_listener_or_connector;
 };
 
 class net;
 class listener {
-    public:
-    net*                     root_net;
-    hio_t*                   listenio;
-    int                      roomid;
+   public:
+    net* root_net;
+    hio_t* listenio;
+    int roomid;
     std::list<connection_t*> conn_list;
 };
 
 class net {
-    public:
-    hloop_t*    loop;
-    std::unique_ptr<listener> create_listener(const char* ip, unsigned short port){
+   public:
+    hloop_t* loop;
+    std::unique_ptr<listener> create_listener(const char* ip, unsigned short port) {
         std::unique_ptr<listener> l(new listener);
 
         hio_t* listenio = hloop_create_tcp_server(loop, "0.0.0.0", port, on_accept);
@@ -45,12 +44,8 @@ class net {
         l->roomid = rand() % 1000000;
         return l;
     }
-    void run(){
-        hloop_run(loop);
-    }
-    ~net(){
-        hloop_free(&loop);
-    }
+    void run() { hloop_run(loop); }
+    ~net() { hloop_free(&loop); }
 };
 
 static std::unique_ptr<net> s_net;
@@ -66,7 +61,7 @@ static void on_close(hio_t* io) {
 
     connection_t* conn = (connection_t*)hevent_userdata(io);
     if (conn) {
-        if (conn->root_listener_or_connector){
+        if (conn->root_listener_or_connector) {
             leave(conn->root_listener_or_connector, conn);
         }
         hevent_set_userdata(io, NULL);
@@ -79,9 +74,7 @@ static void on_recv(hio_t* io, void* buf, int readbytes) {
     printf("on_recv fd=%d readbytes=%d\n", hio_fd(io), readbytes);
     char localaddrstr[SOCKADDR_STRLEN] = {0};
     char peeraddrstr[SOCKADDR_STRLEN] = {0};
-    printf("[%s] <=> [%s]\n",
-            SOCKADDR_STR(hio_localaddr(io), localaddrstr),
-            SOCKADDR_STR(hio_peeraddr(io), peeraddrstr));
+    printf("[%s] <=> [%s]\n", SOCKADDR_STR(hio_localaddr(io), localaddrstr), SOCKADDR_STR(hio_peeraddr(io), peeraddrstr));
     printf("< %.*s", readbytes, (char*)buf);
 
     // broadcast
@@ -97,9 +90,7 @@ static void on_accept(hio_t* io) {
     printf("on accept connfd=%d\n", hio_fd(io));
     char localaddrstr[SOCKADDR_STRLEN] = {0};
     char peeraddrstr[SOCKADDR_STRLEN] = {0};
-    printf("accept connfd=%d [%s] <= [%s]\n", hio_fd(io),
-            SOCKADDR_STR(hio_localaddr(io), localaddrstr),
-            SOCKADDR_STR(hio_peeraddr(io), peeraddrstr));
+    printf("accept connfd=%d [%s] <= [%s]\n", hio_fd(io), SOCKADDR_STR(hio_localaddr(io), localaddrstr), SOCKADDR_STR(hio_peeraddr(io), peeraddrstr));
 
     hio_setcb_close(io, on_close);
     hio_setcb_read(io, on_recv);
@@ -118,7 +109,7 @@ static void on_accept(hio_t* io) {
 }
 
 
-std::unique_ptr<net> create_net(){
+std::unique_ptr<net> create_net() {
     std::unique_ptr<net> n(new net);
     hloop_t* loop = hloop_new(0);
     if (loop == NULL) {
@@ -137,12 +128,11 @@ void join(listener* room, connection_t* conn) {
     connection_t* cur;
     msglen = snprintf(msg, sizeof(msg), "room[%06d] clients:\r\n", room->roomid);
     hio_write(conn->connio, msg, msglen);
-    for (connection_t* cur : room->conn_list)
-    {
+    for (connection_t* cur : room->conn_list) {
         msglen = snprintf(msg, sizeof(msg), "[%s]\r\n", cur->addr);
         hio_write(conn->connio, msg, msglen);
     }
-    
+
     hio_write(conn->connio, "\r\n", 2);
 
     msglen = snprintf(msg, sizeof(msg), "client[%s] join room[%06d]\r\n", conn->addr, room->roomid);
@@ -159,8 +149,7 @@ void leave(listener* room, connection_t* conn) {
 
 void broadcast(listener* room, const char* msg, int msglen) {
     printf("> %.*s", msglen, msg);
-    for (connection_t* conn : room->conn_list)
-    {
+    for (connection_t* conn : room->conn_list) {
         hio_write(conn->connio, msg, msglen);
     }
 }

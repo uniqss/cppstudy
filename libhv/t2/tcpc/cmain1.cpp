@@ -2,11 +2,11 @@
 #include "hbase.h"
 #include "hsocket.h"
 
-#define RECV_BUFSIZE    8192
+#define RECV_BUFSIZE 8192
 static char recvbuf[RECV_BUFSIZE];
 
 // for socket
-hio_t*      sockio = NULL;
+hio_t* sockio = NULL;
 
 hloop_t* loop = NULL;
 
@@ -23,9 +23,7 @@ static void on_recv(hio_t* io, void* buf, int readbytes) {
     if (verbose) {
         char localaddrstr[SOCKADDR_STRLEN] = {0};
         char peeraddrstr[SOCKADDR_STRLEN] = {0};
-        printf("[%s] <=> [%s]\n",
-            SOCKADDR_STR(hio_localaddr(io), localaddrstr),
-            SOCKADDR_STR(hio_peeraddr(io), peeraddrstr));
+        printf("[%s] <=> [%s]\n", SOCKADDR_STR(hio_localaddr(io), localaddrstr), SOCKADDR_STR(hio_peeraddr(io), peeraddrstr));
     }
     printf("%.*s", readbytes, (char*)buf);
 
@@ -52,9 +50,7 @@ static void on_connect(hio_t* io) {
     if (verbose) {
         char localaddrstr[SOCKADDR_STRLEN] = {0};
         char peeraddrstr[SOCKADDR_STRLEN] = {0};
-        printf("connect connfd=%d [%s] => [%s]\n", hio_fd(io),
-            SOCKADDR_STR(hio_localaddr(io), localaddrstr),
-            SOCKADDR_STR(hio_peeraddr(io), peeraddrstr));
+        printf("connect connfd=%d [%s] => [%s]\n", hio_fd(io), SOCKADDR_STR(hio_localaddr(io), localaddrstr), SOCKADDR_STR(hio_peeraddr(io), peeraddrstr));
     }
 
     hio_read_start(io);
@@ -63,8 +59,7 @@ static void on_connect(hio_t* io) {
 }
 
 int main(int argc, char** argv) {
-    if (argc < 3)
-    {
+    if (argc < 3) {
         printf("arg not enough.\n");
         return -1;
     }

@@ -4,16 +4,16 @@
 #include "list.h"
 
 typedef struct chatroom_s {
-    hloop_t*            loop;
-    hio_t*              listenio;
-    int                 roomid;
-    struct list_head    conns;
+    hloop_t* loop;
+    hio_t* listenio;
+    int roomid;
+    struct list_head conns;
 } chatroom_t;
 
 typedef struct connection_s {
-    hio_t*              connio;
-    char                addr[SOCKADDR_STRLEN];
-    struct list_node    node;
+    hio_t* connio;
+    char addr[SOCKADDR_STRLEN];
+    struct list_node node;
 } connection_t;
 
 static chatroom_t s_chatroom;
@@ -32,7 +32,7 @@ void join(chatroom_t* room, connection_t* conn) {
     connection_t* cur;
     msglen = snprintf(msg, sizeof(msg), "room[%06d] clients:\r\n", room->roomid);
     hio_write(conn->connio, msg, msglen);
-    list_for_each (node, &room->conns) {
+    list_for_each(node, &room->conns) {
         cur = list_entry(node, connection_t, node);
         msglen = snprintf(msg, sizeof(msg), "[%s]\r\n", cur->addr);
         hio_write(conn->connio, msg, msglen);
@@ -55,7 +55,7 @@ void broadcast(chatroom_t* room, const char* msg, int msglen) {
     printf("> %.*s", msglen, msg);
     struct list_node* node;
     connection_t* conn;
-    list_for_each (node, &room->conns) {
+    list_for_each(node, &room->conns) {
         conn = list_entry(node, connection_t, node);
         hio_write(conn->connio, msg, msglen);
     }
@@ -77,9 +77,7 @@ static void on_recv(hio_t* io, void* buf, int readbytes) {
     printf("on_recv fd=%d readbytes=%d\n", hio_fd(io), readbytes);
     char localaddrstr[SOCKADDR_STRLEN] = {0};
     char peeraddrstr[SOCKADDR_STRLEN] = {0};
-    printf("[%s] <=> [%s]\n",
-            SOCKADDR_STR(hio_localaddr(io), localaddrstr),
-            SOCKADDR_STR(hio_peeraddr(io), peeraddrstr));
+    printf("[%s] <=> [%s]\n", SOCKADDR_STR(hio_localaddr(io), localaddrstr), SOCKADDR_STR(hio_peeraddr(io), peeraddrstr));
     printf("< %.*s", readbytes, (char*)buf);
 
     // broadcast
@@ -94,9 +92,7 @@ static void on_accept(hio_t* io) {
     printf("on_accept connfd=%d\n", hio_fd(io));
     char localaddrstr[SOCKADDR_STRLEN] = {0};
     char peeraddrstr[SOCKADDR_STRLEN] = {0};
-    printf("accept connfd=%d [%s] <= [%s]\n", hio_fd(io),
-            SOCKADDR_STR(hio_localaddr(io), localaddrstr),
-            SOCKADDR_STR(hio_peeraddr(io), peeraddrstr));
+    printf("accept connfd=%d [%s] <= [%s]\n", hio_fd(io), SOCKADDR_STR(hio_localaddr(io), localaddrstr), SOCKADDR_STR(hio_peeraddr(io), peeraddrstr));
 
     hio_setcb_close(io, on_close);
     hio_setcb_read(io, on_recv);

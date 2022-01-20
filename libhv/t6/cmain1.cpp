@@ -7,8 +7,7 @@
 #include "connection_c.h"
 
 int main(int argc, char** argv) {
-    if (argc < 3)
-    {
+    if (argc < 3) {
         printf("arg not enough.\n");
         return -1;
     }
@@ -23,16 +22,16 @@ int main(int argc, char** argv) {
 
     connection_c conn;
     auto c = net->create_connector(&conn);
-    if (c == NULL){
+    if (c == NULL) {
         return -300;
     }
     bool ok = false;
     ok = c->connect(host, (unsigned short)port);
-    if (!ok){
+    if (!ok) {
         printf("c->connect failed.host:%s, port:%d\n", host, (int)(unsigned short)port);
         return -300;
     }
-    
+
     net->run();
 
     return 0;

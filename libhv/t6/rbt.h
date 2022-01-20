@@ -3,9 +3,8 @@
 
 #include "connection_c.h"
 
-class robot
-{
-    public:
+class robot {
+   public:
     connection_c conn;
 };
 

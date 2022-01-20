@@ -3,9 +3,8 @@
 
 #include "net.h"
 
-class client_conn_factory : public connection_factory
-{
-    public:
+class client_conn_factory : public connection_factory {
+   public:
     virtual connection_t* create_connection();
     virtual void release_connection(connection_t* conn);
 };

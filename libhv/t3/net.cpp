@@ -10,17 +10,17 @@
 
 // member functions
 
-void connection_t::on_establish(){
+void connection_t::on_establish() {
     printf("connection_t::on_establish\n");
 }
-void connection_t::on_recv(void* buf, int readbytes){
+void connection_t::on_recv(void* buf, int readbytes) {
     printf("connection_t::on_recv readbytes:%d\n", readbytes);
 }
-void connection_t::on_close(int error){
+void connection_t::on_close(int error) {
     printf("connection_t::on_recv error:%d\n", error);
 }
 
-connection_t* connection_factory::create_connection(){
+connection_t* connection_factory::create_connection() {
     connection_t* conn = new connection_t();
     if (conn == NULL) {
         return NULL;
@@ -28,13 +28,13 @@ connection_t* connection_factory::create_connection(){
     set_connections.insert(conn);
     return conn;
 }
-void connection_factory::release_connection(connection_t* conn){
-    delete(conn);
+void connection_factory::release_connection(connection_t* conn) {
+    delete (conn);
     set_connections.erase(conn);
 }
 
 static void on_accept(hio_t* io);
-std::unique_ptr<listener> net::create_listener(const char* ip, unsigned short port, connection_factory* conn_factory){
+std::unique_ptr<listener> net::create_listener(const char* ip, unsigned short port, connection_factory* conn_factory) {
     std::unique_ptr<listener> l(new listener);
 
     hio_t* listenio = hloop_create_tcp_server(this->loop, "0.0.0.0", port, on_accept);
@@ -53,10 +53,10 @@ std::unique_ptr<listener> net::create_listener(const char* ip, unsigned short po
     return l;
 }
 
-int net::run(){
+int net::run() {
     return hloop_run(loop);
 }
-net::~net(){
+net::~net() {
     hloop_free(&loop);
 }
 
@@ -80,9 +80,7 @@ static void on_recv(hio_t* io, void* buf, int readbytes) {
     printf("on_recv fd=%d readbytes=%d\n", hio_fd(io), readbytes);
     char localaddrstr[SOCKADDR_STRLEN] = {0};
     char peeraddrstr[SOCKADDR_STRLEN] = {0};
-    printf("[%s] <=> [%s]\n",
-            SOCKADDR_STR(hio_localaddr(io), localaddrstr),
-            SOCKADDR_STR(hio_peeraddr(io), peeraddrstr));
+    printf("[%s] <=> [%s]\n", SOCKADDR_STR(hio_localaddr(io), localaddrstr), SOCKADDR_STR(hio_peeraddr(io), peeraddrstr));
     printf("< %.*s", readbytes, (char*)buf);
 
     // broadcast
@@ -99,9 +97,7 @@ static void on_accept(hio_t* io) {
     printf("on accept connfd=%d\n", hio_fd(io));
     char localaddrstr[SOCKADDR_STRLEN] = {0};
     char peeraddrstr[SOCKADDR_STRLEN] = {0};
-    printf("accept connfd=%d [%s] <= [%s]\n", hio_fd(io),
-            SOCKADDR_STR(hio_localaddr(io), localaddrstr),
-            SOCKADDR_STR(hio_peeraddr(io), peeraddrstr));
+    printf("accept connfd=%d [%s] <= [%s]\n", hio_fd(io), SOCKADDR_STR(hio_localaddr(io), localaddrstr), SOCKADDR_STR(hio_peeraddr(io), peeraddrstr));
 
     hio_setcb_close(io, on_close);
     hio_setcb_read(io, on_recv);
@@ -125,7 +121,7 @@ static void on_accept(hio_t* io) {
 }
 
 // root
-std::unique_ptr<net> create_net(){
+std::unique_ptr<net> create_net() {
     std::unique_ptr<net> n(new net);
     hloop_t* loop = hloop_new(0);
     if (loop == NULL) {
