@@ -1,0 +1,26 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.controller": "yaml",
+			"*.anim": "yaml",
+			"*.playable": "yaml",
+			"*.asset": "yaml",
+			"*.mat": "yaml",
+			"*.inc": "cpp",
+			"*.lua.txt": "lua",
+			"atomic": "cpp",
+			"*.cpp": "cpp",
+			"*.c": "cpp",
+			"*.cc": "cpp",
+			"*.inl": "cpp",
+			"*.cxx": "cpp",
+			"*.h": "cpp",
+			"*.hpp": "cpp"
+		}
+	}
+}
