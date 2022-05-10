@@ -1,0 +1,20 @@
+{
+	"10000101": {
+		"int1": 10000101,
+		"int2": 12345,
+		"str2server": "test string2",
+		"intarray1": "1|2|3|4",
+		"stringarray1": "hello|world|world|hello",
+		"intarray2": "41000001|100|1+51000001|200|2",
+		"stringarray2": "additemkey1|additemdesc1|color_white+additemkey2|additemdesc2|color_green"
+	},
+	"10000102": {
+		"int1": 10000102,
+		"int2": 54321,
+		"str2server": "test string2222",
+		"intarray1": "111|222|333|444",
+		"stringarray1": "hello11|world22|world33|hello44",
+		"intarray2": "41000001|1000|1+51000001|2000|2",
+		"stringarray2": "additemkey1|additemdesc1|color_white+additemkey2|additemdesc2|color_green"
+	}
+}
