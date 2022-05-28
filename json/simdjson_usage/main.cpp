@@ -5,20 +5,6 @@
 using std::cout;
 using std::endl;
 
-// bool read_one_line(simdjson::simdjson_result<simdjson::fallback::ondemand::field>& val) {
-//     cout << val["int1"] << endl;
-//     cout << val["int2"] << endl;
-//     cout << val["str2server"] << endl;
-//     cout << val["intarray1"] << endl;
-//     cout << val["stringarray1"] << endl;
-//     cout << val["intarray2"] << endl;
-//     cout << val["stringarray2"] << endl;
-
-
-//     return true;
-// }
-
-
 bool _TrimJsonValueString(simdjson::ondemand::value& root, const char* node_name, std::string& out) {
     auto field_result = root.find_field(node_name);
     if (field_result.error() != simdjson::SUCCESS) return false;
@@ -50,7 +36,7 @@ bool _TrimJsonValueInt(simdjson::ondemand::value& root, const char* node_name, i
     return true;
 }
 
-bool _TrimJsonValueUint(simdjson::ondemand::value& root, const char* node_name, uint& out, bool from_string = false) {
+bool _TrimJsonValueUint(simdjson::ondemand::value& root, const char* node_name, unsigned int& out, bool from_string = false) {
     auto field_result = root.find_field(node_name);
     if (field_result.error() != simdjson::SUCCESS) return false;
     simdjson::ondemand::value field = field_result.value();
@@ -65,7 +51,7 @@ bool _TrimJsonValueUint(simdjson::ondemand::value& root, const char* node_name, 
 
     if (result.error() != simdjson::SUCCESS) return false;
 
-    out = (uint)result.value();
+    out = (unsigned int)result.value();
     return true;
 }
 
