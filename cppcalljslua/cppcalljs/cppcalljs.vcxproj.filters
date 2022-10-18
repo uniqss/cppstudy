@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Fake">
+      <UniqueIdentifier>{39b0177d-648b-4ca0-9e2c-537be6a4c963}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fake\Engine">
+      <UniqueIdentifier>{24da13d5-1dcf-494b-bd4c-19e08754f576}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fake\Containers">
+      <UniqueIdentifier>{cbddf368-43c1-4876-97e4-a6b555be6388}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fake\UObject">
+      <UniqueIdentifier>{cfc6ef35-1588-4c7b-9cc1-8788aa44c00e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fake\Kismet">
+      <UniqueIdentifier>{1159d468-9c45-46da-bee1-ffd0463ee7a7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="JsEnv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TsGameInstance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Fake\Containers\Ticker.h">
+      <Filter>Fake\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Fake\Engine\GameInstance.h">
+      <Filter>Fake\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Fake\UObject\GCObject.h">
+      <Filter>Fake\UObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Fake\CoreMinimal.h">
+      <Filter>Fake</Filter>
+    </ClInclude>
+    <ClInclude Include="Fake\Definitions.puerts_unreal_demo.h">
+      <Filter>Fake</Filter>
+    </ClInclude>
+    <ClInclude Include="Fake\ObjectRetainer.h">
+      <Filter>Fake</Filter>
+    </ClInclude>
+    <ClInclude Include="Fake\TsGameInstance.generated.h">
+      <Filter>Fake</Filter>
+    </ClInclude>
+    <ClInclude Include="JSLogger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="JSModuleLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ExtensionMethods.h">
+      <Filter>Fake</Filter>
+    </ClInclude>
+    <ClInclude Include="Fake\Kismet\BlueprintFunctionLibrary.h">
+      <Filter>Fake\Kismet</Filter>
+    </ClInclude>
+    <ClInclude Include="Fake\ExtensionMethods.generated.h">
+      <Filter>Fake</Filter>
+    </ClInclude>
+    <ClInclude Include="JsEnvImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cppcalljs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="JsEnv.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Fake\Engine\GameInstance.cpp">
+      <Filter>Fake\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="TsGameInstance.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="JsEnvImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
