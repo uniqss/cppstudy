@@ -70,6 +70,8 @@ void TestRange() {
 int main(void) {
     TestRange();
 
+    cout << "Range的实现及使用" << endl;
+
     system("pause");
     return 0;
 }

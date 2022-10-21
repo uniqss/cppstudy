@@ -1,4 +1,6 @@
 #include <iostream>
+using std::cout;
+using std::endl;
 
 class Foo {
    public:
@@ -22,6 +24,8 @@ int main(void) {
 
     int a5 = {3};
     int a6{3};
+
+    cout << "拷贝构造的使用，根据类构造函数参数列表进行初始化的使用" << endl;
 
     system("pause");
     return 0;

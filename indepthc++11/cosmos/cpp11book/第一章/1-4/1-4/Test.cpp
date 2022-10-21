@@ -41,6 +41,8 @@ int main(void) {
 
     decltype(func_cfoo()) ff = Foo();  // ff -> Foo
 
+    cout << "decltype获取函数返回值类型的用法展示，并不需要实际调用函数，不需要函数实现部分，只需要定义" << endl;
+
     system("pause");
     return 0;
 }

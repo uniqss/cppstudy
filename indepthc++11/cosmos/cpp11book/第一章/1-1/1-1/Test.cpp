@@ -89,6 +89,8 @@ int main(void) {
         func4(mp);
     }
 
+    cout << "auto的基本使用 移动语义临时变量的优化展示" << endl;
+
     system("pause");
     return 0;
 }

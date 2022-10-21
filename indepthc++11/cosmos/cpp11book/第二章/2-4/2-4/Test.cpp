@@ -35,6 +35,8 @@ void Test() {
 int main(void) {
     Test();
 
+    cout << "右值引用与forward/move使用示例" << endl;
+
     system("pause");
     return 0;
 }

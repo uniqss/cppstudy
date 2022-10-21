@@ -70,6 +70,8 @@ int main(void) {
     bool b = true;
     pass_rm(123, 456, "hello", world, d, b);
 
+    cout << "初始化列表(initializer_list)的使用，完美转发的使用与初始化列表的对比" << endl;
+
     system("pause");
     return 0;
 }

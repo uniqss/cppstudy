@@ -81,6 +81,8 @@ int main(void) {
     std::vector<MyString> vec;
     vec.push_back(MyString("World"));
 
+    cout << "与2-2对比，看出c++11使用std::move移动语义解决了临时对象的性能问题" << endl;
+
     system("pause");
     return 0;
 }

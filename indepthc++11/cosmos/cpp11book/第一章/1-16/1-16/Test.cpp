@@ -55,6 +55,9 @@ int main(void) {
     (aa.*mem_func_ptr)();
     aa.*mem_obj_ptr = 123;
 
+    cout << "函数指针基本用法、仿函数基本用法、可被转换为函数指针的类对象的基本用法、类成员函数指针类成员指针的基本用法"
+         << endl;
+
     system("pause");
     return 0;
 }

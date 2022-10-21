@@ -1,5 +1,7 @@
 #include <iostream>
 #include <functional>
+using std::cout;
+using std::endl;
 
 class A {
    public:
@@ -20,13 +22,15 @@ int main(void) {
     fr_i() = 123;
 
     {
-        // 绑定一个局部变量好像是不行的，或者是我的用法不以？？？
+        // 绑定一个局部变量好像是不行的，或者是我的用法不对？？？
         int test = 1024;
         // std::function<int&(void)> func = std::bind(&test, &test);
         // func() = 2024;
     }
 
     std::cout << a.i_ << std::endl;  //输出 123
+
+    cout << "std::bind在类的非静态成员函数上的用法示例、类的成员上的用法示例" << endl;
 
     system("pause");
     return 0;

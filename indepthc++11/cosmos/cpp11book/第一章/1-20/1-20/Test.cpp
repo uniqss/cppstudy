@@ -1,5 +1,7 @@
 #include <iostream>
 #include <functional>
+using std::cout;
+using std::endl;
 
 void call_when_even(int x, const std::function<void(int)>& f) {
     if (!(x & 1))  // x % 2 == 0
@@ -37,6 +39,8 @@ int main(void) {
 
         std::cout << std::endl;
     }
+
+    cout << "std::bind的基本用法，std::placeholders的用法" << endl;
 
     system("pause");
     return 0;

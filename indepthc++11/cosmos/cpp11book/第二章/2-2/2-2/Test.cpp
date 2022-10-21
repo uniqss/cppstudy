@@ -60,6 +60,8 @@ int main(void) {
     std::vector<MyString> vec;
     vec.push_back(MyString("World"));
 
+    cout << "这个示例展示了在c++11出来以前，没有std::move时，c++被诟病的临时对象的性能问题" << endl;
+
     system("pause");
     return 0;
 }

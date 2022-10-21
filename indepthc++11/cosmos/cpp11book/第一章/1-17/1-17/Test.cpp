@@ -1,5 +1,7 @@
 #include <iostream>
 #include <functional>
+using std::cout;
+using std::endl;
 
 void func(void) {
     std::cout << __FUNCTION__ << std::endl;
@@ -32,6 +34,8 @@ int main(void) {
     Bar bar;
     fr2 = bar;
     std::cout << fr2(456) << std::endl;
+
+    cout << "std::function的基本用法（函数指针、类静态成员函数指针、仿函数对象）" << endl;
 
     system("pause");
     return 0;

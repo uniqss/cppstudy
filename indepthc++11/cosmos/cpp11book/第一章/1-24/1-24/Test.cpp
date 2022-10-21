@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+using std::cout;
+using std::endl;
 
 class CountEven {
     int& count_;
@@ -24,6 +26,8 @@ int main(void) {
 
     std::for_each(v.begin(), v.end(), CountEven(even_count));
     std::cout << "The number of even is " << even_count << std::endl;
+
+    cout << "std::for_each 对可调用对象的使用方式，会对每个对象都调用可调用对象的operator()" << endl;
 
     system("pause");
     return 0;

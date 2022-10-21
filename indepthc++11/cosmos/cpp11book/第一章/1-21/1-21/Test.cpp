@@ -60,6 +60,8 @@ int main(void) {
         cout << endl;
     }
 
+    cout << "std::bind使用中placeholders的高级用法示例" << endl;
+
     system("pause");
     return 0;
 }
