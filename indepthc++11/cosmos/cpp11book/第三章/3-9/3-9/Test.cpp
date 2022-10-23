@@ -1,42 +1,63 @@
 #include "MyDLL.h"
 
 #include <iostream>
+using std::cout;
+using std::endl;
+
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
 #include <windows.h>
 
-void TestDll()
-{
-	typedef int(*pMax)(int a, int b);
-	typedef int(*pGet)(int a);
+int TestDll(std::string& errString) {
+    int ret = -1;
+    typedef int (*pMax)(int a, int b);
+    typedef int (*pGet)(int a);
 
-	HINSTANCE hDLL = LoadLibrary("MyDll.dll");
-	if (hDLL == nullptr)
-	{
-		return;
-	}
+    HINSTANCE hDLL = nullptr;
 
-	pMax Max = (pMax)GetProcAddress(hDLL, "Max");
-	if (Max == nullptr)
-	{
-		return;
-	}
+    do {
+        hDLL = LoadLibrary("MyDll.dll");
+        if (hDLL == nullptr) {
+            errString = "LoadLibrary failed";
+            break;
+        }
 
-	int ret = Max(5, 8);
+        pMax Max = (pMax)GetProcAddress(hDLL, "Max");
+        if (Max == nullptr) {
+            errString = "GetProcAddress Max failed";
+            break;
+        }
 
-	pGet Get = (pGet)GetProcAddress(hDLL, "Get");
-	if (Get == nullptr)
-	{
-		return;
-	}
+        ret = Max(5, 8);
+        cout << "Max ret:" << ret << endl;
 
-	int ret2 = Get(5);
+        pGet Get = (pGet)GetProcAddress(hDLL, "Get");
+        if (Get == nullptr) {
+            errString = "GetProcAddress Get failed";
+            break;
+        }
+        ret = Get(5);
+        cout << "Get ret:" << ret << endl;
 
-	FreeLibrary(hDLL);
+        ret = 0;
+    } while (false);
+
+    if (hDLL != nullptr) FreeLibrary(hDLL);
+
+    return ret;
 }
 
-int main(void)
-{
-	TestDll();
+int main(void) {
+    int ret = 0;
+    std::string errString;
+    ret = TestDll(errString);
+    if (ret != 0) {
+        cout << "TestDll errString:" << errString << endl;
+    }
 
-	system("pause");
-	return 0;
+    cout << "windows 直接访问DLL里面函数的使用方式" << endl;
+
+    system("pause");
+    return 0;
 }

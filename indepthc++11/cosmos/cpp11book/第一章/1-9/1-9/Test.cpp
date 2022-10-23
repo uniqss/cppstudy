@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <algorithm>
 using std::cout;
 using std::endl;
 
@@ -42,22 +43,39 @@ void pass_initializer_list(std::initializer_list<int> param) {
 }
 
 // 多个参数类型的可变模板参数的完美转发
-void test_rm() {
-    // cout << "empty func" << endl;
-}
-
+#if 0
+void test_rm() {}
 template <class T, class... Args>
 void test_rm(T&& value, Args&&... args) {
     cout << value << endl;
     test_rm(std::forward<Args>(args)...);
 }
-
 template <class... Args>
 void pass_rm(Args&&... args) {
     cout << "pass_rm" << endl;
     test_rm(std::forward<Args&&>(args)...);
     cout << endl;
 }
+#endif
+#if 0
+// 更炉火纯青的写法
+void pass_rm() {
+    cout << endl;
+}
+template <typename T, typename... Args>
+void pass_rm(T t, Args&&... args) {
+    cout << t << " ";
+    pass_rm(std::forward<Args&&>(args)...);
+}
+#endif
+#if 1
+// 更取巧的写法，c++真是个神奇的语言
+template <typename... Args>
+void pass_rm(Args&&... args) {
+    ((cout << args << " "), ...);
+    cout << endl;
+}
+#endif
 
 int main(void) {
     FooVector foo1 = {1, 2, 3, 4, 5};

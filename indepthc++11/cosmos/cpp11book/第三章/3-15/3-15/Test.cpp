@@ -6,15 +6,15 @@ void Test()
 {
 	typedef Variant<int, double, std::string, int> cv;
 
-	//根据index获取类型
+	//鏍规嵁index鑾峰彇绫诲瀷
 	std::cout << typeid(cv::IndexType<1>).name() << std::endl;
 
-	//根据类型获取索引
+	//鏍规嵁绫诲瀷鑾峰彇绱㈠紩
 	cv v = 10;
 	int i = v.GetIndexOf<std::string>(); 
 	std::cout << "i = " << i << std::endl;
 
-	//通过一组lambda访问vairant
+	//閫氳繃涓�缁刲ambda璁块棶vairant
 	v.Visit([&](double i){std::cout << "double: " << i << std::endl; },
 		[&](short i){std::cout << "short: " << i << std::endl; },
 		[](int i){std::cout << "int: " << i << std::endl; },
