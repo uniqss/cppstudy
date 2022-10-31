@@ -69,7 +69,7 @@ void pass_rm(T t, Args&&... args) {
 }
 #endif
 #if 1
-// 更取巧的写法，c++真是个神奇的语言
+// 更取巧的写法，使用c++17 fold
 template <typename... Args>
 void pass_rm(Args&&... args) {
     ((cout << args << " "), ...);
@@ -80,6 +80,8 @@ void pass_rm(Args&&... args) {
 int main(void) {
     FooVector foo1 = {1, 2, 3, 4, 5};
     FooMap foo2 = {{1, 2}, {3, 4}, {5, 6}};
+    (1, 2);
+    ("hello", 1024, "world");
 
     pass_initializer_list({1, 2, 3, 4, 5, 6, 7, 8, 9});
 
