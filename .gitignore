@@ -45,3 +45,4 @@
 .vs
 x64
 /indepthc++11/*x64
+/boost_study/talking_async/asio-1.24.0
