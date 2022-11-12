@@ -24,7 +24,10 @@ class DllParser {
     }
 
     template <typename T, typename... Args>
-    typename std::result_of<std::function<T>(Args...)>::type ExcecuteFunc(const std::string& funcName, Args&&... args) {
+    // typename std::result_of<std::function<T>(Args...)>::type ExcecuteFunc(const std::string& funcName, Args&&...
+    // args) {
+    typename std::invoke_result<std::function<T>(Args&&...)> ExcecuteFunc(const std::string& funcName,
+                                                                                        Args&&... args) {
         auto f = GetFunction<T>(funcName);
 
         if (f == nullptr) {
