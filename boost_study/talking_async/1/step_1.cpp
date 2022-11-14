@@ -12,41 +12,46 @@ using asio::ip::tcp;
 using asio::use_awaitable;
 using asio::detached;
 
-struct proxy_state{
-    proxy_state(tcp::socket client) : client(std::move(client)){}
+struct proxy_state {
+    proxy_state(tcp::socket client) : client(std::move(client)) {}
     tcp::socket client;
     tcp::socket server{client.get_executor()};
 };
 
 using proxy_state_ptr = std::shared_ptr<proxy_state>;
 
-awaitable<void> client_to_server(proxy_state_ptr state){
-    try{
+awaitable<void> client_to_server(proxy_state_ptr state) {
+    PPID;
+    try {
         std::array<char, 1024> data;
         for (;;) {
             auto n = co_await state->client.async_read_some(buffer(data), use_awaitable);
+            PPID;
             co_await async_write(state->server, buffer(data, n), use_awaitable);
         }
-    } catch (const std::exception& e){
+    } catch (const std::exception& e) {
         state->client.close();
         state->server.close();
     }
 }
 
-awaitable<void> server_to_client(proxy_state_ptr state){
-    try{
+awaitable<void> server_to_client(proxy_state_ptr state) {
+    PPID;
+    try {
         std::array<char, 1024> data;
         for (;;) {
             auto n = co_await state->server.async_read_some(buffer(data), use_awaitable);
+            PPID;
             co_await async_write(state->client, buffer(data, n), use_awaitable);
         }
-    } catch (const std::exception& e){
+    } catch (const std::exception& e) {
         state->client.close();
         state->server.close();
     }
 }
 
-awaitable<void> proxy(tcp::socket client, tcp::endpoint target){
+awaitable<void> proxy(tcp::socket client, tcp::endpoint target) {
+    PPID;
     auto state = std::make_shared<proxy_state>(std::move(client));
 
     co_await state->server.async_connect(target, use_awaitable);
@@ -58,13 +63,21 @@ awaitable<void> proxy(tcp::socket client, tcp::endpoint target){
 }
 
 awaitable<void> listen(tcp::acceptor& acceptor, tcp::endpoint target) {
+    PPID;
     for (;;) {
         auto client = co_await acceptor.async_accept(use_awaitable);
 
+        PPID;
         auto ex = client.get_executor();
         co_spawn(ex, proxy(std::move(client), target), detached);
     }
-    PPID;
+}
+
+awaitable<void> awaitable_test(const char* uid) {
+    PT << uid << "2222222" << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    PT << uid << "33333" << std::endl;
+    co_return;
 }
 
 int main(int argc, const char* argv[]) {
@@ -78,6 +91,14 @@ int main(int argc, const char* argv[]) {
         }
 
         asio::io_context ctx;
+
+#if 0
+        PT << "111111" << std::endl;
+        co_spawn(ctx, awaitable_test("aaa"), asio::detached);
+        co_spawn(ctx, awaitable_test("bbb"), asio::detached);
+        co_spawn(ctx, awaitable_test("ccc"), asio::detached);
+        PT << "444444" << std::endl;
+#endif
 
         auto listen_endpoint = *tcp::resolver(ctx).resolve(argv[1], argv[2], tcp::resolver::passive);
 
