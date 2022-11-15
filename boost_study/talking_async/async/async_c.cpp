@@ -10,34 +10,30 @@ using asio::detached;
 using asio::use_awaitable;
 using asio::ip::tcp;
 
-struct proxy_state {
-    proxy_state(asio::io_context& ctx) : server(ctx, asio::ip::tcp::v4()) {}
-    tcp::socket server;
+struct conn_data {
+    proxy_state(asio::io_context& ctx) : socket(ctx, asio::ip::tcp::v4()) {}
+    tcp::socket socket;
 };
 
-using proxy_state_ptr = std::shared_ptr<proxy_state>;
+using conn_data_ptr = std::shared_ptr<conn_data>;
 
-awaitable<void> client_to_server(proxy_state_ptr state) {
-    try {
-        std::array<char, 1024> data;
-        for (;;) {
-            std::array<char, 1> data_send = {0};
-            co_await async_write(state->server, buffer(data_send), use_awaitable);
+awaitable<void> get_server_time(conn_data_ptr cdata) {
+    std::array<char, 1024> data;
+    std::array<char, 1> data_send = {0};
+    co_await async_write(cdata->socket, buffer(data_send), use_awaitable);
 
-            auto n = co_await state->server.async_read_some(buffer(data), use_awaitable);
-            std::cout << n << " " << data.data() << std::endl;
-        }
-    } catch (const std::exception& e) {
-        state->server.close();
-    }
+    auto n = co_await cdata->socket.async_read_some(buffer(data), use_awaitable);
+    std::cout << n << " " << data.data() << std::endl;
+
+    cdata->socket.close();
 }
 
-awaitable<void> proxy(asio::io_context& ctx, tcp::endpoint target) {
-    auto state = std::make_shared<proxy_state>(ctx);
+awaitable<void> client_operation(asio::io_context& ctx, tcp::endpoint target) {
+    auto cdata = std::make_shared<proxy_state>(ctx);
 
-    co_await state->server.async_connect(target, use_awaitable);
+    co_await cdata->socket.async_connect(target, use_awaitable);
 
-    co_await client_to_server(state);
+    co_await get_server_time(cdata);
 }
 
 int main(int argc, const char** argv) {
@@ -49,7 +45,7 @@ int main(int argc, const char** argv) {
         asio::io_context ctx;
         asio::ip::tcp::endpoint target_endpoint = *asio::ip::tcp::resolver(ctx).resolve(argv[1], argv[2]);
 
-        co_spawn(ctx, proxy(ctx, target_endpoint), detached);
+        co_spawn(ctx, client_operation(ctx, target_endpoint), detached);
 
         ctx.run();
     } catch (std::exception& e) {
