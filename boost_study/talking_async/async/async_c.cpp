@@ -11,7 +11,7 @@ using asio::use_awaitable;
 using asio::ip::tcp;
 
 struct conn_data {
-    proxy_state(asio::io_context& ctx) : socket(ctx, asio::ip::tcp::v4()) {}
+    conn_data(asio::io_context& ctx) : socket(ctx, asio::ip::tcp::v4()) {}
     tcp::socket socket;
 };
 
@@ -29,7 +29,7 @@ awaitable<void> get_server_time(conn_data_ptr cdata) {
 }
 
 awaitable<void> client_operation(asio::io_context& ctx, tcp::endpoint target) {
-    auto cdata = std::make_shared<proxy_state>(ctx);
+    auto cdata = std::make_shared<conn_data>(ctx);
 
     co_await cdata->socket.async_connect(target, use_awaitable);
 

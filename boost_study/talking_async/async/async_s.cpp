@@ -11,14 +11,16 @@ std::string make_daytime_string() {
 }
 
 struct client_data {
-    proxy_state(asio::ip::tcp::socket socket) : socket(std::move(socket)) {}
+    client_data(asio::ip::tcp::socket socket) : socket(std::move(socket)) {}
     asio::ip::tcp::socket socket;
 };
-using client_data_ptr = std::shared_ptr<client_data_ptr>;
+using client_data_ptr = std::shared_ptr<client_data>;
 
-asio::awaitable<void> send_time(client_data_ptr state) {
+asio::awaitable<void> send_time(client_data_ptr cdata) {
     std::string data = make_daytime_string();
-    co_await async_write(state->client, asio::buffer(data), asio::use_awaitable);
+    asio::steady_timer t(cdata->socket.get_executor(), std::chrono::seconds(1));
+    co_await t.async_wait(asio::use_awaitable);
+    co_await async_write(cdata->socket, asio::buffer(data), asio::use_awaitable);
 }
 
 asio::awaitable<void> process_client(asio::ip::tcp::socket socket) {
@@ -26,14 +28,14 @@ asio::awaitable<void> process_client(asio::ip::tcp::socket socket) {
 
     co_await send_time(cdata);
 
-    cdata->client.close();
+    cdata->socket.close();
 }
 
 asio::awaitable<void> listen(asio::ip::tcp::acceptor& acceptor) {
     for (;;) {
         auto csocket = co_await acceptor.async_accept(asio::use_awaitable);
 
-        auto ex = client.get_executor();
+        auto ex = csocket.get_executor();
         asio::co_spawn(ex, process_client(std::move(csocket)), asio::detached);
     }
 }
