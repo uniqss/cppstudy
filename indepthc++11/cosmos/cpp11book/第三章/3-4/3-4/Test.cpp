@@ -41,19 +41,32 @@ struct B {
     B(int, double) {}
 };
 
+struct C {
+    C(){}
+};
+
 // ºÚ‘º–¥∑®
-template <typename T>
-T* MyInstance() {
-    return new T();
-}
+//template <typename T>
+//T* MyInstance() {
+//    return new T();
+//}
 template <typename T, typename... Args>
 T* MyInstance(Args&&... args) {
     return new T(std::forward<Args&&>(args)...);
 }
 
+template<class T>
+class TTT {
+    template<typename T1>
+    void con() {
+
+    }
+};
+
 int main(void) {
     A* pa = Instance<A>(1);
     B* pb = Instance<B>(1, 2);
+    C* pc = MyInstance<C>();
 
     A* mya = MyInstance<A>(1);
     B* myb = MyInstance<B>(1, 2);
