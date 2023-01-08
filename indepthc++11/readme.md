@@ -1,6 +1,6 @@
 # Indepth C++ 11
 
-### 第一章 \cosmos\cpp11book\第一章\
+### 第1章 \cosmos\cpp11book\第1章\
 
 - 1-1 auto 的基本使用 移动语义临时变量的优化展示
 - 1-2 模板函数中使用 auto 获取类的静态成员函数的返回类型 的用法展示
@@ -21,7 +21,7 @@
 - 1-23 这都是 lambda 的一些基本用法，看看就行了，错误也不修了，就是要展示编译错误的
 - 1-24 std::for_each 对可调用对象的使用方式，会对每个对象都调用可调用对象的 operator()
 
-### 第二章 \cosmos\cpp11book\第二章\
+### 第2章 \cosmos\cpp11book\第2章\
 
 - 2-1 这个例子展示了标准的 typeid(xx).name() 取不到的 const 和 volatile 要怎么取到，以及左右值引用的取法，对代码的调试有一定的帮助. type_name 的完美实现
 - 2-2 这个示例展示了在 c++11 出来以前，没有 std::move 时，c++被诟病的临时对象的性能问题
@@ -30,7 +30,7 @@
 - 2-5 这里展示了 map.emplace 和 vector.emplace_back 的强大之处 直接原地 construct 连 move 都省了
 - 2-6 这里展示了 unordered_map 的基本用法，包括自定义类作为 Key 的用法
 
-### 第三章 \cosmos\cpp11book\第三章\
+### 第3章 \cosmos\cpp11book\第3章\
 
 - 3-1 remove_reference 和 add_lvalue_reference 在模板类中的用法
 - 3-2 这题没搞懂，以 c++11/14 标准编译是 ok 的，但是升到 17 和 20 以后这个程序的正确写法没找到，等学完 17 和 20 的三本书再研究
@@ -41,8 +41,8 @@
 - 3-9 windows 直接访问 DLL 里面函数的使用方式
 - 3-10
 
-### 第四章 \cosmos\cpp11book\第四章\
+### 第4章 \cosmos\cpp11book\第4章\
 
-### 第五章 \cosmos\cpp11book\第五章\
+### 第5章 \cosmos\cpp11book\第5章\
 
-### 第六章 \cosmos\cpp11book\第六章\
+### 第6章 \cosmos\cpp11book\第6章\
