@@ -3,6 +3,8 @@
 #include "http_session.hpp"
 #include <iostream>
 
+#include "ulog.h"
+
 listener::listener(net::io_context& ioc, tcp::endpoint endpoint, boost::shared_ptr<shared_state> const& state)
     : ioc_(ioc), acceptor_(ioc), state_(state) {
     beast::error_code ec;
@@ -37,6 +39,7 @@ listener::listener(net::io_context& ioc, tcp::endpoint endpoint, boost::shared_p
 }
 
 void listener::run() {
+    dlog();
     // The new connection gets its own strand
     acceptor_.async_accept(net::make_strand(ioc_), beast::bind_front_handler(&listener::on_accept, shared_from_this()));
 }
@@ -50,6 +53,7 @@ void listener::fail(beast::error_code ec, char const* what) {
 
 // Handle a connection
 void listener::on_accept(beast::error_code ec, tcp::socket socket) {
+    dlog();
     if (ec)
         return fail(ec, "accept");
     else

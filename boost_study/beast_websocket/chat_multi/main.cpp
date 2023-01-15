@@ -7,7 +7,10 @@
 #include <iostream>
 #include <vector>
 
+#include "ulog.h"
+
 int main(int argc, char* argv[]) {
+    dlog();
     // Check command line arguments.
     if (argc != 4) {
         std::cerr << "Usage: websocket-chat-multi <address> <port> <threads>\n"

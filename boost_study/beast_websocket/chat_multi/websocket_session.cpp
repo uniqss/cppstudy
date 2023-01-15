@@ -1,11 +1,13 @@
 
 #include "websocket_session.hpp"
 #include <iostream>
+#include "ulog.h"
 
 websocket_session::websocket_session(tcp::socket&& socket, boost::shared_ptr<shared_state> const& state)
     : ws_(std::move(socket)), state_(state) {}
 
 websocket_session::~websocket_session() {
+    dlog();
     // Remove this session from the list of active sessions
     state_->leave(this);
 }
@@ -18,6 +20,7 @@ void websocket_session::fail(beast::error_code ec, char const* what) {
 }
 
 void websocket_session::on_accept(beast::error_code ec) {
+    dlog();
     // Handle the error, if any
     if (ec) return fail(ec, "accept");
 
@@ -29,6 +32,7 @@ void websocket_session::on_accept(beast::error_code ec) {
 }
 
 void websocket_session::on_read(beast::error_code ec, std::size_t) {
+    dlog();
     // Handle the error, if any
     if (ec) return fail(ec, "read");
 
@@ -43,6 +47,7 @@ void websocket_session::on_read(beast::error_code ec, std::size_t) {
 }
 
 void websocket_session::send(boost::shared_ptr<std::string const> const& ss) {
+    dlog();
     // Post our work to the strand, this ensures
     // that the members of `this` will not be
     // accessed concurrently.
@@ -51,6 +56,7 @@ void websocket_session::send(boost::shared_ptr<std::string const> const& ss) {
 }
 
 void websocket_session::on_send(boost::shared_ptr<std::string const> const& ss) {
+    dlog();
     // Always add to queue
     queue_.push_back(ss);
 
@@ -63,6 +69,7 @@ void websocket_session::on_send(boost::shared_ptr<std::string const> const& ss) 
 }
 
 void websocket_session::on_write(beast::error_code ec, std::size_t) {
+    dlog();
     // Handle the error, if any
     if (ec) return fail(ec, "write");
 
