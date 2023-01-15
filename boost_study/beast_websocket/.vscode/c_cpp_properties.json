@@ -3,17 +3,16 @@
         {
             "name": "Linux",
             "includePath": [
-                "/usr/include/c++/**",
+                "/usr/include/c++/11/**",
                 "/home/uniqs/boost/boost_1_81_0/**",
                 "${workspaceFolder}/**"
             ],
             "forcedInclude": [
-                "${workspaceFolder}/chat_multi/chats"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/g++",
             "cStandard": "c11",
-            "cppStandard": "c++11",
+            "cppStandard": "c++20",
             "intelliSenseMode": "gcc-x64",
             "compilerArgs": [
             ],
