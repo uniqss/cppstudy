@@ -8,6 +8,7 @@
                 "${workspaceFolder}/**"
             ],
             "forcedInclude": [
+                "${workspaceFolder}/chat_multi/chats"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/g++",
