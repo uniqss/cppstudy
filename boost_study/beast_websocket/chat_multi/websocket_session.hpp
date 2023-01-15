@@ -19,6 +19,7 @@ class websocket_session : public boost::enable_shared_from_this<websocket_sessio
     websocket::stream<beast::tcp_stream> ws_;
     boost::shared_ptr<shared_state> state_;
     std::vector<boost::shared_ptr<std::string const>> queue_;
+    int64_t userId_;
 
     void fail(beast::error_code ec, char const* what);
     void on_accept(beast::error_code ec);
@@ -29,6 +30,9 @@ class websocket_session : public boost::enable_shared_from_this<websocket_sessio
     websocket_session(tcp::socket&& socket, boost::shared_ptr<shared_state> const& state);
 
     ~websocket_session();
+
+    int64_t get_uid() { return userId_; }
+    void set_uid(int64_t uid) { userId_ = uid; }
 
     template <class Body, class Allocator>
     void run(http::request<Body, http::basic_fields<Allocator>> req);

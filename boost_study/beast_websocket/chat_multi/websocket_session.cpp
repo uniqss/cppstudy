@@ -4,7 +4,7 @@
 #include "ulog.h"
 
 websocket_session::websocket_session(tcp::socket&& socket, boost::shared_ptr<shared_state> const& state)
-    : ws_(std::move(socket)), state_(state) {}
+    : ws_(std::move(socket)), state_(state), userId_(0) {}
 
 websocket_session::~websocket_session() {
     dlog();
@@ -25,10 +25,17 @@ void websocket_session::on_accept(beast::error_code ec) {
     if (ec) return fail(ec, "accept");
 
     // Add this session to the list of active sessions
-    state_->join(this);
+    state_->join2prelogin(this);
 
     // Read a message
     ws_.async_read(buffer_, beast::bind_front_handler(&websocket_session::on_read, shared_from_this()));
+}
+
+static int64_t get_uid_from_msg(const std::string& msg) {
+    static std::atomic<int64_t> uid_fake = 1024;
+    ++uid_fake;
+
+    return uid_fake;
 }
 
 void websocket_session::on_read(beast::error_code ec, std::size_t) {
@@ -36,8 +43,30 @@ void websocket_session::on_read(beast::error_code ec, std::size_t) {
     // Handle the error, if any
     if (ec) return fail(ec, "read");
 
+    std::string msg = beast::buffers_to_string(buffer_.data());
+
+    if (userId_ == 0) {
+        dlog("userId_ == 0");
+        // must be first login msg. otherwise close connection.
+
+        // first msg, get userId, and save to member uid, and save to shared_state
+        int64_t uid = get_uid_from_msg(msg);
+        userId_ = uid;
+
+        state_->switch2loggedin(this, uid);
+
+        // Clear the buffer
+        buffer_.consume(buffer_.size());
+
+        // Read another message
+        ws_.async_read(buffer_, beast::bind_front_handler(&websocket_session::on_read, shared_from_this()));
+
+        return;
+    }
+    dlog("userId_ != 0, userId_:%lld", userId_);
+
     // Send to all connections
-    state_->send(beast::buffers_to_string(buffer_.data()));
+    state_->broadcast(msg);
 
     // Clear the buffer
     buffer_.consume(buffer_.size());
