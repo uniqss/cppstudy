@@ -12,13 +12,18 @@
 int main(int argc, char* argv[]) {
     dlog();
     // Check command line arguments.
-    if (argc != 4) {
+    if (argc < 4) {
         std::cerr << "Usage: websocket-chat-multi <address> <port> <threads>\n"
                   << "Example:\n"
                   << "    websocket-chat-server 0.0.0.0 8080 5\n";
         return EXIT_FAILURE;
     }
-    auto address = net::ip::make_address(argv[1]);
+    std::string addrStr = argv[1];
+    if (addrStr == "0") {
+        addrStr = "0.0.0.0";  // to simplify input in command line.
+    }
+
+    auto address = net::ip::make_address(addrStr);
     auto port = static_cast<unsigned short>(std::atoi(argv[2]));
     auto const threads = std::max<int>(1, std::atoi(argv[3]));
 
