@@ -2,6 +2,8 @@
 #include "shared_state.hpp"
 #include "websocket_session.hpp"
 
+#include "ulog.h"
+
 shared_state::shared_state() {}
 
 void shared_state::join2prelogin(websocket_session* session) {
@@ -21,9 +23,11 @@ void shared_state::switch2loggedin(websocket_session* session, int64_t uid) {
     }
     if (!exist_prelogin) {
         // log error. must be pre login
+        throw std::logic_error("must be pre login");
     }
     if (exist_login) {
         // log error, should not exist in login
+        throw std::logic_error("should not exist in login");
     }
 }
 
@@ -48,6 +52,7 @@ void shared_state::broadcast(const std::string& message) {
     {
         std::lock_guard<std::mutex> lock(mutex_);
         v.reserve(uid2sessions_.size());
+        dlog("================ broadcast uid2sessions_.size():%d", uid2sessions_.size());
         for (auto p : uid2sessions_) {
             v.emplace_back(p.second->weak_from_this());
         }

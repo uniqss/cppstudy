@@ -30,7 +30,7 @@ void http_session::do_read() {
     parser_->body_limit(10000);
 
     // Set the timeout.
-    stream_.expires_after(std::chrono::seconds(30));
+    stream_.expires_after(std::chrono::seconds(10));
 
     // Read a request
     http::async_read(stream_, buffer_, parser_->get(),

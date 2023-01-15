@@ -25,6 +25,7 @@ std::atomic<int> gnWaitGroup = 0;
 
 int proc(int i) {
     try {
+        int sendidx = 1;
         // The io_context is required for all I/O
         net::io_context ioc;
 
@@ -52,6 +53,9 @@ int proc(int i) {
         // Perform the websocket handshake
         cout << "host:" << host << endl;
         ws.handshake(host, "/");
+
+        std::string login_msg = "login";
+        ws.write(net::buffer(login_msg));
 
         std::string text = gsText + std::to_string(i);
         cout << "text:" << text << endl;
@@ -110,12 +114,11 @@ int main(int argc, char** argv) {
         int loop_count = 0;
         while (gnWaitGroup > 0) {
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
-            if (++loop_count >= 300) {
+            if (++loop_count >= 500) {
                 loop_count = 0;
                 cout << "gnWaitGroup: " << gnWaitGroup << endl;
             }
         }
-
     } catch (std::exception const& e) {
         std::cerr << "Error: " << e.what() << std::endl;
         return EXIT_FAILURE;
