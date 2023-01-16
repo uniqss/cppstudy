@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "*.controller": "yaml",
+        "*.anim": "yaml",
+        "*.playable": "yaml",
+        "*.asset": "yaml",
+        "*.mat": "yaml",
+        "*.inc": "cpp",
+        "*.lua.txt": "lua",
+        "xtr1common": "cpp"
+    }
+}
