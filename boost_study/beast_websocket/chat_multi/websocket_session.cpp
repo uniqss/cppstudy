@@ -4,7 +4,7 @@
 #include "ulog.h"
 #include "sessionmgr.hpp"
 
-websocket_session::websocket_session(tcp::socket&& socket)
+websocket_session::websocket_session(boost::asio::ip::tcp::socket&& socket)
     : ws_(std::move(socket)), userId_(0) {}
 
 websocket_session::~websocket_session() {
@@ -15,7 +15,7 @@ websocket_session::~websocket_session() {
 
 void websocket_session::fail(beast::error_code ec, char const* what) {
     // Don't report these
-    if (ec == net::error::operation_aborted || ec == websocket::error::closed) return;
+    if (ec == boost::asio::error::operation_aborted || ec == websocket::error::closed) return;
 
     std::cerr << what << ": " << ec.message() << "\n";
 }
@@ -82,7 +82,7 @@ void websocket_session::send(boost::shared_ptr<std::string const> const& ss) {
     // that the members of `this` will not be
     // accessed concurrently.
 
-    net::post(ws_.get_executor(), beast::bind_front_handler(&websocket_session::on_send, shared_from_this(), ss));
+    boost::asio::post(ws_.get_executor(), beast::bind_front_handler(&websocket_session::on_send, shared_from_this(), ss));
 }
 
 void websocket_session::on_send(boost::shared_ptr<std::string const> const& ss) {
@@ -94,7 +94,7 @@ void websocket_session::on_send(boost::shared_ptr<std::string const> const& ss) 
     if (queue_.size() > 1) return;
 
     // We are not currently writing, so send this immediately
-    ws_.async_write(net::buffer(*queue_.front()),
+    ws_.async_write(boost::asio::buffer(*queue_.front()),
                     beast::bind_front_handler(&websocket_session::on_write, shared_from_this()));
 }
 
@@ -108,6 +108,6 @@ void websocket_session::on_write(beast::error_code ec, std::size_t) {
 
     // Send the next message if any
     if (!queue_.empty())
-        ws_.async_write(net::buffer(*queue_.front()),
+        ws_.async_write(boost::asio::buffer(*queue_.front()),
                         beast::bind_front_handler(&websocket_session::on_write, shared_from_this()));
 }

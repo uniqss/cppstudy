@@ -1,6 +1,5 @@
 #pragma once
 
-#include "net.hpp"
 #include "beast.hpp"
 
 #include <cstdlib>
@@ -22,7 +21,7 @@ class websocket_session : public boost::enable_shared_from_this<websocket_sessio
     void on_write(beast::error_code ec, std::size_t bytes_transferred);
 
    public:
-    websocket_session(tcp::socket&& socket);
+    websocket_session(boost::asio::ip::tcp::socket&& socket);
 
     ~websocket_session();
 

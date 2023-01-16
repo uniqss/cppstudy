@@ -1,6 +1,5 @@
 #pragma once
 
-#include "net.hpp"
 #include "beast.hpp"
 #include <boost/optional.hpp>
 #include <boost/smart_ptr.hpp>
@@ -15,14 +14,12 @@ class http_session : public boost::enable_shared_from_this<http_session> {
     // construct it from scratch it at the beginning of each new message.
     boost::optional<http::request_parser<http::string_body>> parser_;
 
-    struct send_lambda;
-
     void fail(beast::error_code ec, char const* what);
     void do_read();
     void on_read(beast::error_code ec, std::size_t);
 
    public:
-    http_session(tcp::socket&& socket);
+    http_session(boost::asio::ip::tcp::socket&& socket);
 
     void run();
 };

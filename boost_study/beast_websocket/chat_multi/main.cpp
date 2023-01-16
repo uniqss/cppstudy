@@ -1,6 +1,7 @@
 
 #include "listener.hpp"
 
+#include <boost/asio.hpp>
 #include <boost/asio/signal_set.hpp>
 #include <boost/smart_ptr.hpp>
 #include <iostream>
@@ -22,18 +23,18 @@ int main(int argc, char* argv[]) {
         addrStr = "0.0.0.0";  // to simplify input in command line.
     }
 
-    auto address = net::ip::make_address(addrStr);
+    auto address = boost::asio::ip::make_address(addrStr);
     auto port = static_cast<unsigned short>(std::atoi(argv[2]));
     auto const threads = std::max<int>(1, std::atoi(argv[3]));
 
     // The io_context is required for all I/O
-    net::io_context ioc;
+    boost::asio::io_context ioc;
 
     // Create and launch a listening port
-    boost::make_shared<listener>(ioc, tcp::endpoint{address, port})->run();
+    boost::make_shared<listener>(ioc, boost::asio::ip::tcp::endpoint{address, port})->run();
 
     // Capture SIGINT and SIGTERM to perform a clean shutdown
-    net::signal_set signals(ioc, SIGINT, SIGTERM);
+    boost::asio::signal_set signals(ioc, SIGINT, SIGTERM);
     signals.async_wait([&ioc](boost::system::error_code const&, int) {
         // Stop the io_context. This will cause run()
         // to return immediately, eventually destroying the
