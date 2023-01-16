@@ -2,14 +2,15 @@
 #include "websocket_session.hpp"
 #include <iostream>
 #include "ulog.h"
+#include "sessionmgr.hpp"
 
-websocket_session::websocket_session(tcp::socket&& socket, boost::shared_ptr<shared_state> const& state)
-    : ws_(std::move(socket)), state_(state), userId_(0) {}
+websocket_session::websocket_session(tcp::socket&& socket)
+    : ws_(std::move(socket)), userId_(0) {}
 
 websocket_session::~websocket_session() {
     dlog();
     // Remove this session from the list of active sessions
-    state_->leave(this);
+    gpSessionMgr->leave(this);
 }
 
 void websocket_session::fail(beast::error_code ec, char const* what) {
@@ -25,7 +26,7 @@ void websocket_session::on_accept(beast::error_code ec) {
     if (ec) return fail(ec, "accept");
 
     // Add this session to the list of active sessions
-    state_->join2prelogin(this);
+    gpSessionMgr->join2prelogin(this);
 
     // Read a message
     ws_.async_read(buffer_, beast::bind_front_handler(&websocket_session::on_read, shared_from_this()));
@@ -49,11 +50,11 @@ void websocket_session::on_read(beast::error_code ec, std::size_t) {
         dlog("userId_ == 0");
         // must be first login msg. otherwise close connection.
 
-        // first msg, get userId, and save to member uid, and save to shared_state
+        // first msg, get userId, and save to member uid, and save to sessionmgr
         int64_t uid = get_uid_from_msg(msg);
         userId_ = uid;
 
-        state_->switch2loggedin(this, uid);
+        gpSessionMgr->switch2loggedin(this, uid);
 
         // Clear the buffer
         buffer_.consume(buffer_.size());
@@ -66,7 +67,7 @@ void websocket_session::on_read(beast::error_code ec, std::size_t) {
     dlog("userId_ != 0, userId_:%lld", userId_);
 
     // Send to all connections
-    state_->broadcast(msg);
+    gpSessionMgr->broadcast(msg);
 
     // Clear the buffer
     buffer_.consume(buffer_.size());

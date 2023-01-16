@@ -5,8 +5,7 @@
 #include <iostream>
 #include "ulog.h"
 
-http_session::http_session(tcp::socket &&socket, boost::shared_ptr<shared_state> const &state)
-    : stream_(std::move(socket)), state_(state) {}
+http_session::http_session(tcp::socket &&socket) : stream_(std::move(socket)) {}
 
 void http_session::run() {
     do_read();
@@ -52,7 +51,7 @@ void http_session::on_read(beast::error_code ec, std::size_t) {
     if (websocket::is_upgrade(parser_->get())) {
         // Create a websocket session, transferring ownership
         // of both the socket and the HTTP request.
-        boost::make_shared<websocket_session>(stream_.release_socket(), state_)->run(parser_->release());
+        boost::make_shared<websocket_session>(stream_.release_socket())->run(parser_->release());
         return;
     }
 
