@@ -41,7 +41,9 @@ class websocket_session : public boost::enable_shared_from_this<websocket_sessio
 template <class Body, class Allocator>
 void websocket_session::run(boost::beast::http::request<Body, boost::beast::http::basic_fields<Allocator>> req) {
     // Set suggested timeout settings for the websocket
-    ws_.set_option(boost::beast::websocket::stream_base::timeout::suggested(boost::beast::role_type::server));
+    ws_.set_option(
+        boost::beast::websocket::stream_base::timeout{std::chrono::seconds(15), std::chrono::seconds(15), true});
+    // ws_.set_option(boost::beast::websocket::stream_base::timeout::suggested(boost::beast::role_type::server));
 
     // Set a decorator to change the Server of the handshake
     ws_.set_option(boost::beast::websocket::stream_base::decorator(
