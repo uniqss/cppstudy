@@ -12,7 +12,7 @@ void http_session::run() {
 }
 
 // Report a failure
-void http_session::fail(beast::error_code ec, char const *what) {
+void http_session::fail(boost::beast::error_code ec, char const *what) {
     // Don't report on canceled operations
     if (ec == boost::asio::error::operation_aborted) return;
 
@@ -32,14 +32,14 @@ void http_session::do_read() {
     stream_.expires_after(std::chrono::seconds(10));
 
     // Read a request
-    http::async_read(stream_, buffer_, parser_->get(),
-                     beast::bind_front_handler(&http_session::on_read, shared_from_this()));
+    boost::beast::http::async_read(stream_, buffer_, parser_->get(),
+                     boost::beast::bind_front_handler(&http_session::on_read, shared_from_this()));
 }
 
-void http_session::on_read(beast::error_code ec, std::size_t) {
+void http_session::on_read(boost::beast::error_code ec, std::size_t) {
     dlog();
     // This means they closed the connection
-    if (ec == http::error::end_of_stream) {
+    if (ec == boost::beast::http::error::end_of_stream) {
         stream_.socket().shutdown(boost::asio::ip::tcp::socket::shutdown_send, ec);
         return;
     }
@@ -48,7 +48,7 @@ void http_session::on_read(beast::error_code ec, std::size_t) {
     if (ec) return fail(ec, "read");
 
     // See if it is a WebSocket Upgrade
-    if (websocket::is_upgrade(parser_->get())) {
+    if (boost::beast::websocket::is_upgrade(parser_->get())) {
         // Create a websocket session, transferring ownership
         // of both the socket and the HTTP request.
         boost::make_shared<websocket_session>(stream_.release_socket())->run(parser_->release());

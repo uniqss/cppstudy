@@ -13,14 +13,14 @@ websocket_session::~websocket_session() {
     gpSessionMgr->leave(this);
 }
 
-void websocket_session::fail(beast::error_code ec, char const* what) {
+void websocket_session::fail(boost::beast::error_code ec, char const* what) {
     // Don't report these
-    if (ec == boost::asio::error::operation_aborted || ec == websocket::error::closed) return;
+    if (ec == boost::asio::error::operation_aborted || ec == boost::beast::websocket::error::closed) return;
 
     std::cerr << what << ": " << ec.message() << "\n";
 }
 
-void websocket_session::on_accept(beast::error_code ec) {
+void websocket_session::on_accept(boost::beast::error_code ec) {
     dlog();
     // Handle the error, if any
     if (ec) return fail(ec, "accept");
@@ -29,7 +29,7 @@ void websocket_session::on_accept(beast::error_code ec) {
     gpSessionMgr->join2prelogin(this);
 
     // Read a message
-    ws_.async_read(buffer_, beast::bind_front_handler(&websocket_session::on_read, shared_from_this()));
+    ws_.async_read(buffer_, boost::beast::bind_front_handler(&websocket_session::on_read, shared_from_this()));
 }
 
 static int64_t get_uid_from_msg(const std::string& msg) {
@@ -39,12 +39,12 @@ static int64_t get_uid_from_msg(const std::string& msg) {
     return uid_fake;
 }
 
-void websocket_session::on_read(beast::error_code ec, std::size_t) {
+void websocket_session::on_read(boost::beast::error_code ec, std::size_t) {
     dlog();
     // Handle the error, if any
     if (ec) return fail(ec, "read");
 
-    std::string msg = beast::buffers_to_string(buffer_.data());
+    std::string msg = boost::beast::buffers_to_string(buffer_.data());
 
     if (userId_ == 0) {
         dlog("userId_ == 0");
@@ -60,7 +60,7 @@ void websocket_session::on_read(beast::error_code ec, std::size_t) {
         buffer_.consume(buffer_.size());
 
         // Read another message
-        ws_.async_read(buffer_, beast::bind_front_handler(&websocket_session::on_read, shared_from_this()));
+        ws_.async_read(buffer_, boost::beast::bind_front_handler(&websocket_session::on_read, shared_from_this()));
 
         return;
     }
@@ -73,7 +73,7 @@ void websocket_session::on_read(beast::error_code ec, std::size_t) {
     buffer_.consume(buffer_.size());
 
     // Read another message
-    ws_.async_read(buffer_, beast::bind_front_handler(&websocket_session::on_read, shared_from_this()));
+    ws_.async_read(buffer_, boost::beast::bind_front_handler(&websocket_session::on_read, shared_from_this()));
 }
 
 void websocket_session::send(boost::shared_ptr<std::string const> const& ss) {
@@ -82,7 +82,7 @@ void websocket_session::send(boost::shared_ptr<std::string const> const& ss) {
     // that the members of `this` will not be
     // accessed concurrently.
 
-    boost::asio::post(ws_.get_executor(), beast::bind_front_handler(&websocket_session::on_send, shared_from_this(), ss));
+    boost::asio::post(ws_.get_executor(), boost::beast::bind_front_handler(&websocket_session::on_send, shared_from_this(), ss));
 }
 
 void websocket_session::on_send(boost::shared_ptr<std::string const> const& ss) {
@@ -95,10 +95,10 @@ void websocket_session::on_send(boost::shared_ptr<std::string const> const& ss) 
 
     // We are not currently writing, so send this immediately
     ws_.async_write(boost::asio::buffer(*queue_.front()),
-                    beast::bind_front_handler(&websocket_session::on_write, shared_from_this()));
+                    boost::beast::bind_front_handler(&websocket_session::on_write, shared_from_this()));
 }
 
-void websocket_session::on_write(beast::error_code ec, std::size_t) {
+void websocket_session::on_write(boost::beast::error_code ec, std::size_t) {
     dlog();
     // Handle the error, if any
     if (ec) return fail(ec, "write");
@@ -109,5 +109,5 @@ void websocket_session::on_write(beast::error_code ec, std::size_t) {
     // Send the next message if any
     if (!queue_.empty())
         ws_.async_write(boost::asio::buffer(*queue_.front()),
-                        beast::bind_front_handler(&websocket_session::on_write, shared_from_this()));
+                        boost::beast::bind_front_handler(&websocket_session::on_write, shared_from_this()));
 }

@@ -6,7 +6,7 @@
 #include "ulog.h"
 
 listener::listener(boost::asio::io_context& ioc, boost::asio::ip::tcp::endpoint endpoint) : ioc_(ioc), acceptor_(ioc) {
-    beast::error_code ec;
+    boost::beast::error_code ec;
 
     // Open the acceptor
     acceptor_.open(endpoint.protocol(), ec);
@@ -41,18 +41,18 @@ void listener::run() {
     dlog();
     // The new connection gets its own strand
     acceptor_.async_accept(boost::asio::make_strand(ioc_),
-                           beast::bind_front_handler(&listener::on_accept, shared_from_this()));
+                           boost::beast::bind_front_handler(&listener::on_accept, shared_from_this()));
 }
 
 // Report a failure
-void listener::fail(beast::error_code ec, char const* what) {
+void listener::fail(boost::beast::error_code ec, char const* what) {
     // Don't report on canceled operations
     if (ec == boost::asio::error::operation_aborted) return;
     std::cerr << what << ": " << ec.message() << "\n";
 }
 
 // Handle a connection
-void listener::on_accept(beast::error_code ec, boost::asio::ip::tcp::socket socket) {
+void listener::on_accept(boost::beast::error_code ec, boost::asio::ip::tcp::socket socket) {
     dlog();
     if (ec)
         return fail(ec, "accept");
@@ -62,5 +62,5 @@ void listener::on_accept(beast::error_code ec, boost::asio::ip::tcp::socket sock
 
     // The new connection gets its own strand
     acceptor_.async_accept(boost::asio::make_strand(ioc_),
-                           beast::bind_front_handler(&listener::on_accept, shared_from_this()));
+                           boost::beast::bind_front_handler(&listener::on_accept, shared_from_this()));
 }
