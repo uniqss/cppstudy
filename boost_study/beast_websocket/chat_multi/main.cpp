@@ -1,5 +1,5 @@
 
-#include "listener.hpp"
+#include "wslistener.hpp"
 
 #include <boost/asio.hpp>
 #include <boost/asio/signal_set.hpp>
@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
     boost::asio::io_context ioc;
 
     // Create and launch a listening port
-    boost::make_shared<listener>(ioc, boost::asio::ip::tcp::endpoint{address, port})->run();
+    boost::make_shared<wslistener>(ioc, boost::asio::ip::tcp::endpoint{address, port})->run();
 
     // Capture SIGINT and SIGTERM to perform a clean shutdown
     boost::asio::signal_set signals(ioc, SIGINT, SIGTERM);

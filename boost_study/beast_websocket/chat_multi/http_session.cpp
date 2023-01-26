@@ -33,7 +33,7 @@ void http_session::do_read() {
 
     // Read a request
     boost::beast::http::async_read(stream_, buffer_, parser_->get(),
-                     boost::beast::bind_front_handler(&http_session::on_read, shared_from_this()));
+                                   boost::beast::bind_front_handler(&http_session::on_read, shared_from_this()));
 }
 
 void http_session::on_read(boost::beast::error_code ec, std::size_t) {
@@ -56,5 +56,7 @@ void http_session::on_read(boost::beast::error_code ec, std::size_t) {
     }
 
     // we support websocket only.
+    stream_.socket().shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
+    dlog("shutdown_both");
     return;
 }
