@@ -92,3 +92,25 @@ bool ProcessExistByPathKey(const std::string& processKey, std::string& err) {
 
 	return ret;
 }
+
+int CreateDetachProcess(const char* exe_path, const char* cmd_line_args, const char* workingDir) {
+	PROCESS_INFORMATION p_info = { 0 };
+	STARTUPINFO s_info = { 0 };
+
+	s_info.cb = sizeof(STARTUPINFO);
+	//s_info.dwFlags |= CREATE_NEW_CONSOLE;
+	s_info.dwFlags |= DETACHED_PROCESS;
+
+	if (!CreateProcess(exe_path, (LPSTR)cmd_line_args, NULL, NULL, FALSE,
+		//CREATE_NEW_CONSOLE,
+		//NORMAL_PRIORITY_CLASS | CREATE_NEW_CONSOLE | CREATE_NEW_PROCESS_GROUP,
+		DETACHED_PROCESS,
+		NULL, workingDir, &s_info, &p_info)) {
+		return -1;
+	}
+
+	if (p_info.hProcess != 0) CloseHandle(p_info.hProcess);
+	if (p_info.hThread != 0) CloseHandle(p_info.hThread);
+
+	return 0;
+}
