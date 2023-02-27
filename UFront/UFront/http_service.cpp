@@ -27,7 +27,7 @@ using namespace easylog;
 int HttpThread(std::function<void()> exitCb) {
     std::filesystem::create_directories("./log/");
     std::string filename = "./log/front.log";
-    easylog::init_log(Severity::DEBUG, filename, true, 5000, 10, true);
+    easylog::init_log(Severity::DEBUG, filename, false, 5000, 10, true);
 
     cinatra::http_server server(std::thread::hardware_concurrency());
     bool r = server.listen("0.0.0.0", "65533");
