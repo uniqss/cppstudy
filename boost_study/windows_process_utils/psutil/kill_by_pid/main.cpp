@@ -72,10 +72,10 @@ int main(int argc, const char* argv[]) {
 		ifs >> pid;
 	}
 	else {
-		pid = atoi(argv[1]);
+		int pid = atoi(argv[1]);
 	}
 
-	//printf("sending ctrl_c to pid:%d\n", pid);
+	printf("sending ctrl_c to pid:%d\n", pid);
 
 	sendCtrlC(pid);
 	std::this_thread::sleep_for(std::chrono::milliseconds(50));
