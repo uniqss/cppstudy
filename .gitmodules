@@ -1,0 +1,6 @@
+[submodule "UFront/cinatra"]
+	path = UFront/cinatra
+	url = git@github.com:qicosmos/cinatra.git
+[submodule "UFront/yalantinglibs"]
+	path = UFront/yalantinglibs
+	url = git@github.com:alibaba/yalantinglibs.git
