@@ -71,6 +71,7 @@
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
 	&quot;operation&quot;: &quot;start_server&quot;,&#xd;
+	&quot;server_id&quot;: &quot;108&quot;,&#xd;
 	&quot;success_cb&quot;: &quot;http://admyq996.fgcq.info/start_server/success?event=start_server_status&amp;target_machine_msg=192.168.1.167:Administrator:tv8NjLYt1cPBq9NR&amp;becrossed_msg=&amp;cross_msg=&quot;,&#xd;
 	&quot;fail_cb&quot;: &quot;admyq996.fgcq.info/start_server/fail?event=start_server_status&quot;&#xd;
 }&#xd;
@@ -125,7 +126,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
         </HTTPSamplerProxy>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="front" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="front" enabled="false">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -156,7 +157,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
         </HTTPSamplerProxy>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="stop_server" enabled="false">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="stop_server" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -164,6 +165,7 @@
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
 	&quot;operation&quot;: &quot;stop_server&quot;,&#xd;
+	&quot;server_id&quot;: &quot;108&quot;,&#xd;
 	&quot;success_cb&quot;: &quot;http://admyq996.fgcq.info/start_server/success?event=start_server_status&amp;target_machine_msg=192.168.1.167:Administrator:tv8NjLYt1cPBq9NR&amp;becrossed_msg=&amp;cross_msg=&quot;,&#xd;
 	&quot;fail_cb&quot;: &quot;admyq996.fgcq.info/start_server/fail?event=start_server_status&quot;&#xd;
 }&#xd;

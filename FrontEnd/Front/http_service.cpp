@@ -92,9 +92,9 @@ void HttpThread(std::function<void()> exitCb) {
 		}
 		ss << "}";
 
-		conn->get_rep().content = "{\"ret:\" +  + "}";
+		conn->get_rep().content = "{\"ret:\" +  + \"}";
 		conn->do_write();
-});
+		});
 
 	my_event_loop.RunForever();
 
